@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="cates_name">
+        <item>活畜</item>
+        <item>果蔬</item>
+        <item>活畜(野生)</item>
+        <item>果蔬(野生)</item>
+    </array>
+    <array name="sale_mea">
+        <item>只</item>
+        <item>头</item>
+        <item>斤</item>
+        <item>吨</item>
+        <item>千克(kg)</item>
+    </array>
+
+    <array name="book_msg">
+        <item>全部</item>
+        <item>预售</item>
+        <item>限售</item>
+    </array>
+</resources>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fsapp.sunsi.foosecurity.product.ImageProductActivity">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        //左间距
+        <LinearLayout
+            android:layout_width="@dimen/all_zero"
+            android:layout_height="match_parent"
+            android:layout_weight="0.03">
+        </LinearLayout>
+        //中间详细信息
+        <LinearLayout
+            android:layout_width="@dimen/all_zero"
+            android:layout_height="match_parent"
+            android:layout_weight="0.96"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/all_zero"
+                android:layout_weight="0.8"
+                android:gravity="center_vertical">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/all_zero"
+                android:layout_weight="0.2"
+                android:gravity="center_vertical">
+                <Button
+                    android:id="@+id/pro_pro_create"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/all_forty"
+                    android:background="@drawable/button_corner_green"
+                    android:text="创 建"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </LinearLayout>
+        //右间距
+        <LinearLayout
+            android:layout_width="@dimen/all_zero"
+            android:layout_height="match_parent"
+            android:layout_weight="0.03">
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

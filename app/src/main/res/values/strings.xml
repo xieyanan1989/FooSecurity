@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">食心安</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="user_name">请输入您的手机号码</string>
+    <string name="pass_wd">密码</string>
+    <string name="pass_wd_ag">再次输入密码</string>
+    <string name="title_activity_other">OtherActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="nav_home">首页</string>
+    <string name="nav_buy">我的购买</string>
+    <string name="nav_add">供应产品</string>
+    <string name="nav_sell">我的供应</string>
+    <string name="nav_self">个人中心</string>
+    <string name="regist_address">请输入详细地址</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_forget_pwd">ForgetPwdActivity</string>
+    <string name="valid_num">输入验证码</string>
+    <string name="regist_user_ph">拍一张照片</string>
+    <string name="regist_user_lh">在相册中选择</string>
+    <string name="pro_num">数量</string>
+    <string name="pro_title">产品名称</string>
+    <string name="pro_detail">产品详情</string>
+    <string name="pro_price">单价</string>
+    <string name="pro_com">佣金</string>
+    <string name="title_activity_modify_pwd">ModifyPwdActivity</string>
+    <string name="title_activity_regist_address">RegistAddressActivity</string>
+    <string name="title_activity_regist_user_img">RegistUserImgActivity</string>
+    <string name="title_activity_add_product">AddProductActivity</string>
+    <string name="title_activity_sell_product">SellProductActivity</string>
+    <string name="title_activity_image_product">ImageProductActivity</string>
+    <string name="label_cancel">取消</string>
+    <string name="label_ok">确定</string>
+    <string name="permission_title_rationale">权限需求</string>
+    <string name="permission_read_storage_rationale">选择图片时需要读取权限</string>
+    <string name="permission_write_storage_rationale">拍照时需要存储权限</string>
+</resources>

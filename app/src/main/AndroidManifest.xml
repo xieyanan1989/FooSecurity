@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fsapp.sunsi.foosecurity">
+
+    <!-- mob短信 需要的权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+      
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+      
+    <application
+        android:name=".MapApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/app_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="ZMD3VAAztvfGXwtnfwvGaIs44Hty16lX" />
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        <!-- 登录 -->
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        //注册
+        <activity
+            android:name=".regist.RegistActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        //忘记密码
+        <activity
+            android:name=".ForgetPwdActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        //修改密码
+        <activity
+            android:name=".ModifyPwdActivity"
+            android:label="@string/title_activity_modify_pwd"
+            android:theme="@style/AppTheme.NoActionBar" />
+        //地址注册
+        <activity
+            android:name=".regist.RegistAddressActivity"
+            android:label="@string/title_activity_regist_address"
+            android:theme="@style/AppTheme.NoActionBar" />
+        //地图调试
+        <activity
+            android:name=".Map.LocationDemo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".regist.RegistUserImgActivity"
+            android:label="@string/title_activity_regist_user_img"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".product.AddProductActivity"
+            android:label="@string/title_activity_add_product"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".product.SellProductActivity"
+            android:label="@string/title_activity_sell_product"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".product.ImageProductActivity"
+            android:label="@string/title_activity_image_product"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:theme="@style/customTheme"
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            />
+
+        <activity
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:name="me.iwf.photopicker.PhotoPagerActivity"
+            />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="423ff17515038a50c41085cc2dbd0087d2e51cbb" />
+
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+    </application>
+
+</manifest>

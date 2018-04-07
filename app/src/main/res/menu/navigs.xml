@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@mipmap/home_green"
+        android:title="@string/nav_home" />
+
+    <item
+        android:id="@+id/nav_buy"
+        android:icon="@mipmap/buy_green"
+        android:title="@string/nav_buy" />
+
+    <item
+        android:id="@+id/nav_add"
+        android:icon="@mipmap/add"
+        android:title="@string/nav_add" />
+
+    <item
+        android:id="@+id/nav_sell"
+        android:icon="@mipmap/pig_green"
+        android:title="@string/nav_sell" />
+
+    <item
+        android:id="@+id/nav_self"
+        android:icon="@mipmap/me_green"
+        android:title="@string/nav_self" />
+</menu>

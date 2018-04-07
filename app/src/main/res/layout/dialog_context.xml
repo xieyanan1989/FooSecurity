@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/all_zero"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            //左间距
+            <LinearLayout
+                android:layout_width="@dimen/all_zero"
+                android:layout_height="match_parent"
+                android:layout_weight="0.03">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="@dimen/all_hundred_two"
+                android:layout_height="@dimen/all_hundred"
+                android:layout_weight="0.94"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/dia_context"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/all_one"
+                    android:layout_weight="0.8"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/all_thirteen"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/all_thirteen"
+                    android:text="sdfsd"
+                    android:gravity="center_vertical|center_horizontal"/>
+                <Button
+                    android:id="@+id/dia_sure"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="@dimen/all_ten"
+                    android:layout_height="@dimen/all_forty"
+                    android:background="@drawable/button_corner_green"
+                    android:text="确  定"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            //右间距
+            <LinearLayout
+                android:layout_width="@dimen/all_zero"
+                android:layout_height="match_parent"
+                android:layout_weight="0.03">
+            </LinearLayout>
+
+        </LinearLayout>
+</LinearLayout>

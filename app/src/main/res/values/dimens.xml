@@ -1,0 +1,31 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="all_zero">0dp</dimen>
+    <dimen name="all_one">1dp</dimen>
+    <dimen name="all_three">3dp</dimen>
+    <dimen name="all_five">5dp</dimen>
+    <dimen name="all_ten">10dp</dimen>
+    <dimen name="all_eleven">11dp</dimen>
+    <dimen name="all_twelve">12dp</dimen>
+    <dimen name="all_thirteen">13dp</dimen>
+    <dimen name="all_fourteen">14dp</dimen>
+    <dimen name="all_fifteen">15dp</dimen>
+    <dimen name="all_twenty">20dp</dimen>
+    <dimen name="all_thirty">30dp</dimen>
+    <dimen name="all_thirty_five">35dp</dimen>
+    <dimen name="all_forty">40dp</dimen>
+    <dimen name="all_fifty">50dp</dimen>
+    <dimen name="all_sixty">60dp</dimen>
+    <dimen name="all_seventy">70dp</dimen>
+    <dimen name="all_eighty">80dp</dimen>
+    <dimen name="all_ninety">90dp</dimen>
+    <dimen name="all_hundred">100dp</dimen>
+    <dimen name="all_hundred_two">200dp</dimen>
+    <dimen name="all_hundred_three">300dp</dimen>
+    <dimen name="all_hundred_four">400dp</dimen>
+    <dimen name="all_hundred_five">500dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="actionBarSize">32dip</dimen>
+</resources>
