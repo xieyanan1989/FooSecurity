@@ -74,7 +74,7 @@ public class ProDialog extends Dialog {
     private  void initScroll(){
         try {
             lv_adapter = new MyListViewAdapter(context);
-            lv_adapter.notifyDataSetChanged();
+//            lv_adapter.notifyDataSetChanged();
             pro_pros.setAdapter(lv_adapter);
         }catch (Exception e){
             e.printStackTrace();
@@ -118,20 +118,41 @@ public class ProDialog extends Dialog {
         }
 
         public View getView(final int position, View convertView, ViewGroup parent) {
+            try {
                 final ViewHolder holder;
                 if (convertView == null) {
                     holder = new ViewHolder();
                     convertView = mInflater.inflate(R.layout.pro_list_item, null);
                     holder.user_pro_img = (ImageView) convertView.findViewById(R.id.user_pro_img);
-                    holder.user_pro_cateName = (TextView) convertView.findViewById(R.id.user_pro_img);
-                    holder.user_pro_saletype = (TextView) convertView.findViewById(R.id.user_pro_img);
-                    holder.user_pro_title = (TextView) convertView.findViewById(R.id.user_pro_img);
-                    holder.user_pro_saleCountMea = (TextView) convertView.findViewById(R.id.user_pro_img);
-                    holder.user_pro_saleSingle = (TextView) convertView.findViewById(R.id.user_pro_img);
+                    holder.user_pro_cateName = (TextView) convertView.findViewById(R.id.user_pro_cateName);
+                    holder.user_pro_saletype = (TextView) convertView.findViewById(R.id.user_pro_saletype);
+                    holder.user_pro_title = (TextView) convertView.findViewById(R.id.user_pro_title);
+                    holder.user_pro_saleCountMea = (TextView) convertView.findViewById(R.id.user_pro_saleCountMea);
+                    holder.user_pro_saleSingle = (TextView) convertView.findViewById(R.id.user_pro_saleSingle);
                     convertView.setTag(holder);
                 } else {
                     holder = (ViewHolder) convertView.getTag();
                 }
+                final JSONObject jsonObject = (JSONObject)jsonArry.get(position);
+                holder.user_pro_cateName.setText(jsonObject.getString("catename"));
+                int saletype = jsonObject.getInt("saletype");
+                if(saletype == 1){
+                    holder.user_pro_saletype.setText("预售");
+                }else{
+                    holder.user_pro_saletype.setText("在售");
+                }
+                holder.user_pro_title.setText(jsonObject.getString("saletitle"));
+                holder.user_pro_saleCountMea.setText(jsonObject.getString("salecount")+jsonObject.getString("salemea"));
+                int salesingle = jsonObject.getInt("salesingle");
+                if(salesingle == 1){
+                    holder.user_pro_saleSingle.setText("单卖");
+                }else{
+                    holder.user_pro_saleSingle.setText("整售");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
             return convertView;
         }
     }

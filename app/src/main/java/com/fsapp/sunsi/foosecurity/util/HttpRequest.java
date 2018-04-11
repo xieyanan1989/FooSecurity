@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class HttpRequest {
     //测试
 //    public  static final String url = "http://47.93.51.99:8080/";
-    public  static final String url = "http://192.168.1.2:8080/";
+    public  static final String url = "http://192.168.1.4:8080/";
     public StringBuilder postRequest() {
         HttpURLConnection connection = null;
         StringBuilder response = null;
