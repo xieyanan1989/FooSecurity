@@ -101,7 +101,8 @@ public class ImageProductActivity extends AppCompatActivity {
                     }else{
 //                    map.put("imgurl",map.get("imgurl")+":"+UTIL.getCurrDate()+"|");
                         latch.await();
-                        map.put("imgurl",map.get("imgs")+":"+UTIL.getCurrDate()+"|");
+//                        map.put("imgurl",map.get("imgs")+":"+UTIL.getCurrDate()+"|");
+                        map.put("imgurl",map.get("imgs"));
                         map.put("username",db.querUser().get("userName"));
                         createPro();
                     }
@@ -182,6 +183,7 @@ public class ImageProductActivity extends AppCompatActivity {
                 //判断需上传的个数
                 countdowns = 0;
                 map.put("imgs","");
+                map.put("imgurl","");
                 for(int i = 0 ; i < photos.size() ; i ++){
                     //已上传的图片中是否包括当前的
                     String photoUrl = (String) proImgmap.get(photos.get(i));
@@ -220,7 +222,7 @@ public class ImageProductActivity extends AppCompatActivity {
                     String result = UploadUtil.uploadFile(upFile, HttpRequest.url+"pro/upload");
                     JSONObject ob = UTIL.StringGetMap(result);
                     if (ob.getString("msg").equals("0")){
-                        if (map.get("imgs") == null){
+                        if (map.get("imgs") == null || map.get("imgs").equals("")){
                             map.put("imgs",ob.getString("filename"));
                         }else {
                             map.put("imgs",map.get("imgs")+","+ob.getString("filename"));
