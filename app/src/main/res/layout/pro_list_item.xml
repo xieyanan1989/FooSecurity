@@ -97,16 +97,28 @@
     </LinearLayout>
     //图片地址，画廊
     <LinearLayout
+        android:id="@+id/user_pro_gallery"
         android:layout_width="match_parent"
         android:layout_height="@dimen/all_hundred_two"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="@dimen/all_zero"
+        android:clipChildren="false"
+        android:layerType="software"
+        android:background="@android:color/black"
+        android:orientation="vertical">
+        <!--<TextView-->
+            <!--android:layout_width="@dimen/all_zero"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="4"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@drawable/region_text_color"-->
+            <!--android:textSize="@dimen/all_thirteen"-->
+            <!--android:text="***********"/>-->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/user_pro_imgs"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:textColor="@drawable/region_text_color"
-            android:textSize="@dimen/all_thirteen"
-            android:text="***********"/>
+            android:layout_gravity="center"
+            android:clipChildren="false"
+            >
+        </android.support.v4.view.ViewPager>
     </LinearLayout>
 </LinearLayout>

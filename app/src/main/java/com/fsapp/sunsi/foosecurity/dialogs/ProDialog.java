@@ -3,8 +3,11 @@ package com.fsapp.sunsi.foosecurity.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,12 +16,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.fsapp.sunsi.foosecurity.R;
+import com.fsapp.sunsi.foosecurity.util.HttpRequest;
+import com.fsapp.sunsi.foosecurity.util.ImagesTransformation;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +41,7 @@ public class ProDialog extends Dialog {
     private OnButtonOnClickListener buttonOnClickListener;
     private MyListViewAdapter lv_adapter;
     private Map map = new HashMap();
+    private int pagerWidth;
     public ProDialog(@NonNull Context context, JSONArray jsonArray) {
         super(context);
         this.jsonArry = jsonArray;
@@ -129,6 +138,7 @@ public class ProDialog extends Dialog {
                     holder.user_pro_title = (TextView) convertView.findViewById(R.id.user_pro_title);
                     holder.user_pro_saleCountMea = (TextView) convertView.findViewById(R.id.user_pro_saleCountMea);
                     holder.user_pro_saleSingle = (TextView) convertView.findViewById(R.id.user_pro_saleSingle);
+                    holder.user_pro_imgs= (ViewPager)convertView.findViewById(R.id.user_pro_imgs);
                     convertView.setTag(holder);
                 } else {
                     holder = (ViewHolder) convertView.getTag();
@@ -149,12 +159,70 @@ public class ProDialog extends Dialog {
                 }else{
                     holder.user_pro_saleSingle.setText("整售");
                 }
+                List<ImageView> imageViewList = new ArrayList<ImageView>();
+                String[] imgUrls = jsonObject.get("imgurl").toString().split("\\/");
+                for(String url : imgUrls[1].split(",")){
+                    ImageView imageView = new ImageView(context);
+                    Glide.with(context).load(HttpRequest.img_url+imgUrls[0]+"/"+url).into(imageView);
+                    imageViewList.add(imageView);
+                }
+                //将下载下来的图片加载到viewAdapter
+                showimgs(holder.user_pro_imgs,convertView,imageViewList);
             }catch (Exception e){
                 e.printStackTrace();
             }
 
             return convertView;
         }
+    }
+
+    /**
+     * 加载viewAdapter
+     * @param user_pro_imgs
+     * @param convertView
+     * @param imageViewList
+     */
+    private void showimgs(final ViewPager user_pro_imgs, View convertView,final List<ImageView> imageViewList) {
+        user_pro_imgs.setOffscreenPageLimit(3);
+        pagerWidth= (int) (context.getResources().getDisplayMetrics().widthPixels*3.0f/5.0f);
+        ViewGroup.LayoutParams lp=user_pro_imgs.getLayoutParams();
+        if (lp==null){
+            lp=new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.MATCH_PARENT);
+        }else {
+            lp.width=pagerWidth;
+        }
+        user_pro_imgs.setLayoutParams(lp);
+        user_pro_imgs.setPageMargin(-50);
+        convertView.findViewById(R.id.user_pro_gallery).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return user_pro_imgs.dispatchTouchEvent(motionEvent);
+            }
+        });
+        user_pro_imgs.setPageTransformer(true,new ImagesTransformation());
+        user_pro_imgs.setAdapter(new PagerAdapter() {
+            @Override
+            public int getCount() {
+                return imageViewList.size();
+            }
+
+            @Override
+            public boolean isViewFromObject(View view, Object object) {
+                return view==object;
+            }
+
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+                container.removeView(imageViewList.get(position));
+            }
+
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                ImageView imageView=imageViewList.get(position);
+                container.addView(imageView,position);
+                return imageView;
+            }
+        });
     }
 
     static class ViewHolder {
@@ -164,5 +232,6 @@ public class ProDialog extends Dialog {
         TextView user_pro_title;
         TextView user_pro_saleCountMea;
         TextView user_pro_saleSingle;
+        ViewPager user_pro_imgs;
     }
 }

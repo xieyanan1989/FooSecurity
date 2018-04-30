@@ -22,9 +22,11 @@ import java.util.ArrayList;
  */
 
 public class HttpRequest {
+    //正式
+    public  static final String url = "http://47.93.51.99:8080/";
+    public  static final String img_url = "http://47.93.51.99:80/img_user/";
     //测试
-//    public  static final String url = "http://47.93.51.99:8080/";
-    public  static final String url = "http://192.168.1.4:8080/";
+//    public  static final String url = "http://192.168.1.4:8080/";
     public StringBuilder postRequest() {
         HttpURLConnection connection = null;
         StringBuilder response = null;
