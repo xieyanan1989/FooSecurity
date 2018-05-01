@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
     private void mapView() {
         // 开启定位图层
         mBaiduMap = mMapView.getMap();
-//        mBaiduMap.setMyLocationEnabled(true);
+        mBaiduMap.setMyLocationEnabled(true);
         // 定位初始化
         mLocClient = new LocationClient(this);
         mLocClient.registerLocationListener(myListener);
@@ -255,6 +255,46 @@ public class MainActivity extends AppCompatActivity {
         option.setScanSpan(1000);
         mLocClient.setLocOption(option);
         mLocClient.start();
+        //百度地图拖拽事件
+        mapStatusChangeListener();
+    }
+
+    /**
+     * 百度地图拖拽事件监听
+     */
+    private void mapStatusChangeListener() {
+        mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
+            @Override
+            public void onMapStatusChangeStart(MapStatus mapStatus) {
+
+            }
+
+            @Override
+            public void onMapStatusChangeStart(MapStatus mapStatus, int i) {
+
+            }
+
+            @Override
+            public void onMapStatusChange(MapStatus mapStatus) {
+
+            }
+
+            @Override
+            public void onMapStatusChangeFinish(MapStatus mapStatus) {
+                LatLng latLng = mapStatus.target;
+                mCurrentLat = latLng.latitude;
+                mCurrentLon = latLng.longitude;
+                //21: 10;20: 20;19: 50;18: 100;17: 200;16: 500;15: 1000;14: 2000;13: 5000;12: 10000;11: 20000;
+                //10: 25000;9: 50000;8: 100000;7: 200000;6: 500000;5: 1000000; 4: 2000000;
+                //自v5.0.0起，为了优化显示效果，将地图缩放等级由3-21调整为4-21，请开发者注意。
+                // 1: 2500km;2: 630km;3: 78km;4: 30km; 5: 2.4km; 6: 610m; 7: 76m; 8: 19m （geoHash距离值）
+                Float zoom = mapStatus.zoom;
+                if(zoom < 14){
+                    MapUtil.setMapLevel(3);
+                }
+                getGeoHash();
+            }
+        });
     }
 
     /**
@@ -338,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
                     getGeoHash();
                     LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());
                     MapStatus.Builder builder = new MapStatus.Builder();
-                    builder.target(ll).zoom(18.0f);
+                    builder.target(ll).zoom(14.0f);
                     mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 }
                 //根据当前坐标点获取产品数据并显示
@@ -360,7 +400,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     String geoHash = CacheUtil.getGeoHash(mCurrentLat,mCurrentLon,4);
                     Map map = new HashMap();
-                    map.put("geoHash",String.valueOf(geoHash.substring(0,4)));
+                    map.put("geoHash",String.valueOf(geoHash.substring(0,MapUtil.getMapLevel())));
                     String json = UTIL.AjaxJson(map);
                     String sig = HttpRequest.md5(json);
                     Map<String,String> paramMap = new HashMap<String, String>();
@@ -369,7 +409,7 @@ public class MainActivity extends AppCompatActivity {
                     String result = HttpRequest.sendPost("pro/nearby",paramMap);
                     JSONObject ob = UTIL.StringGetMap(result);
                     if (ob.getString("msg").equals("0")){
-                        MapUtil.clearOverLay(mBaiduMap);
+//                        MapUtil.clearOverLay(mBaiduMap);
                         String resultStr = MapUtil.overLay(context,ob.getJSONArray("list"),mBaiduMap);
                     }else{
 //                        errormsg = UTIL.errorCode(ob.getString("msg"));

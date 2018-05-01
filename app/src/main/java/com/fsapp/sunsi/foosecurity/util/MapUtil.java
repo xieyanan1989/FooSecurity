@@ -15,15 +15,25 @@ import com.fsapp.sunsi.foosecurity.dialogs.ProDialog;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MapUtil {
+    public static int mapLevel = 4;
+    public static int setMapLevel(int level){
+        mapLevel = level;
+        return mapLevel;
+    }
+    public static int getMapLevel(){
+        return mapLevel;
+    }
     //绘图点标记
     public static String overLay(final Context context, final JSONArray list, BaiduMap mBaiduMap){
         String resultStr = "success";
         try {
+            List<OverlayOptions> overList = new ArrayList<OverlayOptions>();
             for (int i =0 ; i < list.length() ; i++) {
                 JSONObject ob = list.getJSONObject(i);
                 //定义Maker坐标点
@@ -33,8 +43,10 @@ public class MapUtil {
                 //构建MarkerOption，用于在地图上添加Marker
                 OverlayOptions option = new MarkerOptions().position(point) .icon(bitmap);
                 //在地图上添加Marker，并显示
-                mBaiduMap.addOverlay(option);
+//                mBaiduMap.addOverlay(option);
+                overList.add(option);
             }
+            mBaiduMap.addOverlays(overList);
             mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
@@ -49,7 +61,8 @@ public class MapUtil {
                                 jarr.put(ob);
                             }
                         }
-                        new ProDialog(context,jarr).show();
+                        ProDialog pd = new ProDialog(context,jarr);
+                        pd.show();
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -77,4 +90,5 @@ public class MapUtil {
 
         return resultStr;
     }
+
 }
