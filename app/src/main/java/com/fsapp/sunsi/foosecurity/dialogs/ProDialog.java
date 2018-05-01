@@ -2,6 +2,8 @@ package com.fsapp.sunsi.foosecurity.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +28,7 @@ import com.fsapp.sunsi.foosecurity.util.ImagesTransformation;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +42,7 @@ public class ProDialog extends Dialog {
     private JSONArray jsonArry;
     private Context context;
     private ListView pro_pros;
-    private Button pro_sure;
+//    private Button pro_sure;
     private OnButtonOnClickListener buttonOnClickListener;
     private MyListViewAdapter lv_adapter;
     private Map map = new HashMap();
@@ -54,9 +59,13 @@ public class ProDialog extends Dialog {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.dialog_product, null);
         pro_pros = (ListView) view.findViewById(R.id.pro_pros);
-        pro_sure = (Button) view.findViewById(R.id.pro_sure);
-        diasureEvent(pro_sure);
+//        pro_sure = (Button) view.findViewById(R.id.pro_sure);
+//        diasureEvent(pro_sure);
         setContentView(view);
+        //设置window背景，默认的背景会有Padding值，不能全屏。当然不一定要是透明，你可以设置其他背景，替换默认的背景即可。
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //一定要在setContentView之后调用，否则无效
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         initScroll();
     }
 
@@ -68,8 +77,10 @@ public class ProDialog extends Dialog {
             }
         });
     }
+    @Override
     public void show(){
         super.show();
+
     }
     public interface OnButtonOnClickListener {
         //        public void onOkBtnClick(String cate_id, String cate_name,double comm,int ct);
@@ -137,8 +148,12 @@ public class ProDialog extends Dialog {
                     holder.user_pro_saletype = (TextView) convertView.findViewById(R.id.user_pro_saletype);
                     holder.user_pro_title = (TextView) convertView.findViewById(R.id.user_pro_title);
                     holder.user_pro_saleCountMea = (TextView) convertView.findViewById(R.id.user_pro_saleCountMea);
+                    holder.user_pro_saleCount = (TextView) convertView.findViewById(R.id.user_pro_saleCount);
                     holder.user_pro_saleSingle = (TextView) convertView.findViewById(R.id.user_pro_saleSingle);
                     holder.user_pro_imgs= (ViewPager)convertView.findViewById(R.id.user_pro_imgs);
+                    holder.user_pro_subtract= (Button) convertView.findViewById(R.id.user_pro_subtract);
+                    holder.user_pro_add= (Button) convertView.findViewById(R.id.user_pro_add);
+                    holder.user_pro_buy_amount = (TextView) convertView.findViewById(R.id.user_pro_buy_amount);
                     convertView.setTag(holder);
                 } else {
                     holder = (ViewHolder) convertView.getTag();
@@ -153,6 +168,9 @@ public class ProDialog extends Dialog {
                 }
                 holder.user_pro_title.setText(jsonObject.getString("saletitle"));
                 holder.user_pro_saleCountMea.setText(jsonObject.getString("salecount")+jsonObject.getString("salemea"));
+                Double proPrice = Double.parseDouble(jsonObject.getString("proPrice"));
+                holder.user_pro_buy_amount.setText(jsonObject.getString("proPrice"));
+//                holder.user_pro_saleCount.setText(jsonObject.getString("salecount"));
                 int salesingle = jsonObject.getInt("salesingle");
                 if(salesingle == 1){
                     holder.user_pro_saleSingle.setText("单卖");
@@ -168,12 +186,44 @@ public class ProDialog extends Dialog {
                 }
                 //将下载下来的图片加载到viewAdapter
                 showimgs(holder.user_pro_imgs,convertView,imageViewList);
+                int saleCount =Integer.parseInt(jsonObject.getString("salecount"));
+                int currCount =Integer.parseInt((String) holder.user_pro_saleCount.getText());
+                //减少数量的事件
+                countSubtract(holder.user_pro_subtract,currCount,holder.user_pro_saleCount,holder.user_pro_buy_amount,proPrice);
+                //增加数量的事件
+                countAdd(holder.user_pro_add,saleCount,currCount,holder.user_pro_saleCount,holder.user_pro_buy_amount,proPrice);
             }catch (Exception e){
                 e.printStackTrace();
             }
 
             return convertView;
         }
+    }
+
+    private void countAdd(final Button user_pro_saleCount, final int saleCount, final int currCount, final TextView userProSaleCount, final TextView user_pro_buy_amount, final Double proPrice) {
+        user_pro_saleCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int count  =Integer.parseInt((String) userProSaleCount.getText())+1;
+                if(saleCount >= count){
+                    userProSaleCount.setText(""+count);
+                    user_pro_buy_amount.setText(""+(proPrice*count));
+                }
+            }
+        });
+    }
+
+    private void countSubtract(final Button user_pro_saleCount, final int currCount,final TextView pro_saleCount, final TextView user_pro_buy_amount,final Double proPrice) {
+        user_pro_saleCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int count  =Integer.parseInt((String) pro_saleCount.getText())-1;
+                if(count >= 1){
+                    pro_saleCount.setText(""+count);
+                    user_pro_buy_amount.setText(""+(proPrice*count));
+                }
+            }
+        });
     }
 
     /**
@@ -231,7 +281,11 @@ public class ProDialog extends Dialog {
         TextView user_pro_saletype;
         TextView user_pro_title;
         TextView user_pro_saleCountMea;
+        TextView user_pro_saleCount;
         TextView user_pro_saleSingle;
         ViewPager user_pro_imgs;
+        Button user_pro_subtract;
+        Button user_pro_add;
+        TextView user_pro_buy_amount;
     }
 }
