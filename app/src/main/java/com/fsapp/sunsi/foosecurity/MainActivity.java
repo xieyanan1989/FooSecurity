@@ -36,6 +36,7 @@ import com.fsapp.sunsi.foosecurity.dialogs.MainRegionDialog;
 import com.fsapp.sunsi.foosecurity.product.AddProductActivity;
 //import com.fsapp.sunsi.foosecurity.product.ImageProductActivity;
 import com.fsapp.sunsi.foosecurity.product.ImageProductActivity;
+import com.fsapp.sunsi.foosecurity.product.MapProductActivity;
 import com.fsapp.sunsi.foosecurity.regist.RegistAddressActivity;
 import com.fsapp.sunsi.foosecurity.regist.RegistUserImgActivity;
 import com.fsapp.sunsi.foosecurity.util.CacheUtil;
@@ -289,9 +290,9 @@ public class MainActivity extends AppCompatActivity {
                 //自v5.0.0起，为了优化显示效果，将地图缩放等级由3-21调整为4-21，请开发者注意。
                 // 1: 2500km;2: 630km;3: 78km;4: 30km; 5: 2.4km; 6: 610m; 7: 76m; 8: 19m （geoHash距离值）
                 Float zoom = mapStatus.zoom;
-                if(zoom < 14){
-                    MapUtil.setMapLevel(3);
-                }
+//                if(zoom < 14){
+//                    MapUtil.setMapLevel(3);
+//                }
                 getGeoHash();
             }
         });
@@ -378,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
                     getGeoHash();
                     LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());
                     MapStatus.Builder builder = new MapStatus.Builder();
-                    builder.target(ll).zoom(14.0f);
+                    builder.target(ll).zoom(13.0f);
                     mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 }
                 //根据当前坐标点获取产品数据并显示
@@ -425,7 +426,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
-
     private void requestPros(String geoHashBase32) {
 //        new Thread(new Runnable() {
 //            @Override

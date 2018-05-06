@@ -1,6 +1,7 @@
 package com.fsapp.sunsi.foosecurity.util;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -9,8 +10,10 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.fsapp.sunsi.foosecurity.*;
 import com.fsapp.sunsi.foosecurity.R;
 import com.fsapp.sunsi.foosecurity.dialogs.ProDialog;
+import com.fsapp.sunsi.foosecurity.product.MapProductActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,7 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MapUtil {
-    public static int mapLevel = 4;
+    private static BaiduMap.OnMarkerClickListener onMarkerClickListener ;
+    public static int mapLevel = 3;
     public static int setMapLevel(int level){
         mapLevel = level;
         return mapLevel;
@@ -46,8 +50,10 @@ public class MapUtil {
 //                mBaiduMap.addOverlay(option);
                 overList.add(option);
             }
+            mBaiduMap.removeMarkerClickListener(onMarkerClickListener);
+            mBaiduMap.clear();
             mBaiduMap.addOverlays(overList);
-            mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+            onMarkerClickListener =new BaiduMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     try {
@@ -63,12 +69,17 @@ public class MapUtil {
                         }
                         ProDialog pd = new ProDialog(context,jarr);
                         pd.show();
+
+//                        Intent intentd  = new Intent(context,Ma);
+//                        intentd.putExtra("jsonArry", jarr.toString());
+//                        context.startActivity(intentd);
                     }catch (Exception e){
                         e.printStackTrace();
                     }
                     return false;
                 }
-            });
+            };
+            mBaiduMap.setOnMarkerClickListener(onMarkerClickListener);
         }catch (Exception e){
             resultStr ="fail";
             e.printStackTrace();

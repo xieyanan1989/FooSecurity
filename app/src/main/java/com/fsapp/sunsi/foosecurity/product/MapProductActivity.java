@@ -1,129 +1,70 @@
-package com.fsapp.sunsi.foosecurity.dialogs;
+package com.fsapp.sunsi.foosecurity.product;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.fsapp.sunsi.foosecurity.LoginActivity;
 import com.fsapp.sunsi.foosecurity.R;
-import com.fsapp.sunsi.foosecurity.util.DBUtil;
 import com.fsapp.sunsi.foosecurity.util.HttpRequest;
 import com.fsapp.sunsi.foosecurity.util.ImagesTransformation;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by xyn-pc on 2018/4/7.
- */
-
-public class ProDialog extends Dialog {
+public class MapProductActivity extends AppCompatActivity {
     private JSONArray jsonArry;
-    private Context context;
+    private Context context = MapProductActivity.this;
     private ListView pro_pros;
-//    private Button pro_sure;
-    private OnButtonOnClickListener buttonOnClickListener;
-    private MyListViewAdapter lv_adapter;
+    private ListViewAdapter lv_adapter;
     private Map map = new HashMap();
     private int pagerWidth;
-    public ProDialog(@NonNull Context context, JSONArray jsonArray) {
-        super(context);
-        this.jsonArry = jsonArray;
-        this.context = context;
-        initView();
-    }
-
-    private void initView() {
-        setCanceledOnTouchOutside(false);
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.dialog_product, null);
-        pro_pros = (ListView) view.findViewById(R.id.pro_pros);
-//        pro_sure = (Button) view.findViewById(R.id.pro_sure);
-//        diasureEvent(pro_sure);
-        setContentView(view);
-        //设置window背景，默认的背景会有Padding值，不能全屏。当然不一定要是透明，你可以设置其他背景，替换默认的背景即可。
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        //一定要在setContentView之后调用，否则无效
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_map_product);
+        pro_pros = (ListView)findViewById(R.id.pro_pros);
+        try {
+            jsonArry= new JSONArray(getIntent().getBundleExtra("jsonArray"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         initScroll();
     }
-
-    private void diasureEvent(Button diasure) {
-        diasure.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-    }
-    @Override
-    public void show(){
-        super.show();
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        cancel();
-    }
-
-    public interface OnButtonOnClickListener {
-        //        public void onOkBtnClick(String cate_id, String cate_name,double comm,int ct);
-        public void onOkBtnClick(Map returnamp);
-    }
-    public void setButtonOnClickListener(ProDialog.OnButtonOnClickListener buttonOnClickListener) {
-        this.buttonOnClickListener = buttonOnClickListener;
-    }
-
-
     private  void initScroll(){
         try {
-            lv_adapter = new MyListViewAdapter(context);
+            lv_adapter = new ListViewAdapter(context);
 //            lv_adapter.notifyDataSetChanged();
             pro_pros.setAdapter(lv_adapter);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-    private void contextDialog(String errormsg){
-        new ContextDialog(context,errormsg).show();
-    }
 
-    class MyListViewAdapter extends BaseAdapter {
+    class ListViewAdapter extends BaseAdapter {
 
         private LayoutInflater mInflater;
 
-        public MyListViewAdapter(Context context) {
+        public ListViewAdapter(Context context) {
             mInflater = LayoutInflater.from(context);
         }
 
@@ -207,32 +148,12 @@ public class ProDialog extends Dialog {
                 countSubtract(holder.user_pro_subtract,currCount,holder.user_pro_saleCount,holder.user_pro_buy_amount,proPrice);
                 //增加数量的事件
                 countAdd(holder.user_pro_add,saleCount,currCount,holder.user_pro_saleCount,holder.user_pro_buy_amount,proPrice);
-                //结算事件
-                clearing(holder.user_pro_buy_amount,jsonObject);
             }catch (Exception e){
                 e.printStackTrace();
             }
 
             return convertView;
         }
-    }
-
-    private void clearing(TextView user_pro_buy_amount, JSONObject jsonObject) {
-        user_pro_buy_amount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DBUtil db= new DBUtil(context);
-                Map map = db.querUser();
-                String userName = (String)map.get("userName");
-                if(userName == "" || userName == null){
-//                    int success = db
-                    Intent intentd  = new Intent(context,LoginActivity.class);
-                    context.startActivity(intentd);
-                }else {
-//                    paymethod();
-                }
-            }
-        });
     }
 
     private void countAdd(final Button user_pro_saleCount, final int saleCount, final int currCount, final TextView userProSaleCount, final TextView user_pro_buy_amount, final Double proPrice) {
@@ -322,5 +243,10 @@ public class ProDialog extends Dialog {
         Button user_pro_subtract;
         Button user_pro_add;
         TextView user_pro_buy_amount;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

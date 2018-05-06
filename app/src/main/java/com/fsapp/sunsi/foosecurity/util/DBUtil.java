@@ -28,6 +28,7 @@ public class DBUtil extends SQLiteOpenHelper {
         try {
             Log.i("Line", "52");
             db.execSQL("CREATE TABLE IF NOT EXISTS BA_USER_INFO (USER_NAME VARCHAR,LOGIN_PWD VARCHAR,PAY_PWD VARCHAR,CHECKED INTEGER)");
+            db.execSQL("CREATE TABLE IF NOT EXISTS BA_PRO_INFO (USER_NAME VARCHAR,LOGIN_PWD VARCHAR,PAY_PWD VARCHAR,CHECKED INTEGER)");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -77,7 +78,7 @@ public class DBUtil extends SQLiteOpenHelper {
         }
         return map;
     }
-    public Map insertUser(String username,String pwd,boolean ischeck) {
+    public Map insertPro(String username,String pwd,boolean ischeck) {
         map = new HashMap();
         SQLiteDatabase db = null;
         int num = 1;
@@ -109,5 +110,23 @@ public class DBUtil extends SQLiteOpenHelper {
         }finally {
             db.close();
         }
+    }
+
+    public int insertUser(String username,String pwd,boolean ischeck) {
+        map = new HashMap();
+        SQLiteDatabase db = null;
+        int num = 1;
+        if(ischeck == false){
+            num = 0;
+        }
+        try{
+            db = this.getWritableDatabase();
+            db.execSQL("INSERT INTO BA_USER_INFO(USER_NAME,LOGIN_PWD,PAY_PWD,CHECKED) VALUES("+ username+ "," + pwd + "," + pwd + "," + num + ")");
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            db.close();
+        }
+        return 0;
     }
 }

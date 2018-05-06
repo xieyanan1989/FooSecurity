@@ -93,23 +93,22 @@
         <activity
             android:name=".product.ImageProductActivity"
             android:label="@string/title_activity_image_product"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:theme="@style/customTheme"
             android:name="me.iwf.photopicker.PhotoPickerActivity"
-            />
-
+            android:theme="@style/customTheme" />
         <activity
-            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:name="me.iwf.photopicker.PhotoPagerActivity"
-            />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="423ff17515038a50c41085cc2dbd0087d2e51cbb" />
 
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+        <activity
+            android:name=".product.MapProductActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
