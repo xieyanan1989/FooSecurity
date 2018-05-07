@@ -178,7 +178,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/user_pro_add"
+        android:id="@+id/user_pro_clearing"
         android:layout_width="match_parent"
         android:layout_height="@dimen/all_forty"
         android:layout_weight="2"

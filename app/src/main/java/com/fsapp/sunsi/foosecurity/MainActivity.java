@@ -30,6 +30,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.fsapp.sunsi.foosecurity.buy.BuyProActivity;
 import com.fsapp.sunsi.foosecurity.dialogs.CatesDialog;
 import com.fsapp.sunsi.foosecurity.dialogs.ContextDialog;
 import com.fsapp.sunsi.foosecurity.dialogs.MainRegionDialog;
@@ -95,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
                         intentd = new Intent(context,LoginActivity.class);
                         startActivity(intentd);
                         return false;
+                    }else{
+                        intentd = new Intent(context,BuyProActivity.class);
+                        startActivity(intentd);
                     }
                     return true;
                 case R.id.nav_add:

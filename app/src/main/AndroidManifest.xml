@@ -108,7 +108,9 @@
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
         <activity
             android:name=".product.MapProductActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".buy.BuyProActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

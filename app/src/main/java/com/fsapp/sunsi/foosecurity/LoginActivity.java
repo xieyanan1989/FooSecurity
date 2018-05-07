@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.os.Handler;
 import android.os.Message;
+
+import com.fsapp.sunsi.foosecurity.buy.BuyProActivity;
 import com.fsapp.sunsi.foosecurity.dialogs.ContextDialog;
 import com.fsapp.sunsi.foosecurity.regist.RegistActivity;
 import com.fsapp.sunsi.foosecurity.util.DBUtil;
@@ -156,7 +158,12 @@ public class LoginActivity extends AppCompatActivity {
                                     // 发送message值给Handler接收
                                     allhand.sendMessage(msg);
                                 }
-                                finish();
+                                if (getIntent().getStringExtra("send").equals("buy")){
+                                    Intent intentd = new Intent(context,BuyProActivity.class);
+                                    startActivity(intentd);
+                                }else{
+                                    finish();
+                                }
                             }else{
                                 errormsg = UTIL.errorCode(ob.getString("msg"));
                                 msg = new Message();
