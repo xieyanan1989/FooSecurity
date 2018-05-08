@@ -1,6 +1,7 @@
 package com.fsapp.sunsi.foosecurity.product;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.PagerAdapter;
@@ -17,9 +18,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.fsapp.sunsi.foosecurity.LoginActivity;
 import com.fsapp.sunsi.foosecurity.R;
+import com.fsapp.sunsi.foosecurity.dialogs.ContextDialog;
+import com.fsapp.sunsi.foosecurity.pay.PayFragment;
+import com.fsapp.sunsi.foosecurity.pay.PayPwdView;
+import com.fsapp.sunsi.foosecurity.util.DBUtil;
 import com.fsapp.sunsi.foosecurity.util.HttpRequest;
 import com.fsapp.sunsi.foosecurity.util.ImagesTransformation;
 
@@ -31,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapProductActivity extends AppCompatActivity {
+public class MapProductActivity extends AppCompatActivity implements PayPwdView.InputCallBack{
     private JSONArray jsonArry;
     private Context context = MapProductActivity.this;
     private ListView pro_pros;
@@ -44,7 +51,9 @@ public class MapProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_map_product);
         pro_pros = (ListView)findViewById(R.id.pro_pros);
         try {
-            jsonArry= new JSONArray(getIntent().getBundleExtra("jsonArray"));
+            Intent intent = getIntent();
+            String jsons = intent.getStringExtra("jsonArray");
+            jsonArry= new JSONArray(jsons);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -58,6 +67,11 @@ public class MapProductActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onInputFinish(String result) {
+        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
 
     class ListViewAdapter extends BaseAdapter {
@@ -110,6 +124,7 @@ public class MapProductActivity extends AppCompatActivity {
                     holder.user_pro_subtract= (Button) convertView.findViewById(R.id.user_pro_subtract);
                     holder.user_pro_add= (Button) convertView.findViewById(R.id.user_pro_add);
                     holder.user_pro_buy_amount = (TextView) convertView.findViewById(R.id.user_pro_buy_amount);
+                    holder.user_pro_clearing= (Button) convertView.findViewById(R.id.user_pro_clearing);
                     convertView.setTag(holder);
                 } else {
                     holder = (ViewHolder) convertView.getTag();
@@ -148,11 +163,51 @@ public class MapProductActivity extends AppCompatActivity {
                 countSubtract(holder.user_pro_subtract,currCount,holder.user_pro_saleCount,holder.user_pro_buy_amount,proPrice);
                 //增加数量的事件
                 countAdd(holder.user_pro_add,saleCount,currCount,holder.user_pro_saleCount,holder.user_pro_buy_amount,proPrice);
+                //结算事件
+                clearing(holder.user_pro_clearing,jsonObject);
             }catch (Exception e){
                 e.printStackTrace();
             }
 
             return convertView;
+        }
+    }
+
+    private void clearing(Button user_pro_clearing,final JSONObject jsonObject) {
+        user_pro_clearing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DBUtil db= new DBUtil(context);
+                Map map = db.querUser();
+                String userName = (String)map.get("userName");
+                if(userName == "" || userName == null){
+                    int success = db.insertPro(jsonObject);
+                    if (success ==0 ){
+                        Intent intentd  = new Intent(context,LoginActivity.class);
+                        intentd.putExtra("send","buy");
+                        context.startActivity(intentd);
+                    }else {
+                        contextDialog(context,"数据库写入异常");
+                    }
+                }else {
+                    //支付方式
+                    paymethod();
+                }
+            }
+        });
+    }
+
+    private void paymethod() {
+        try {
+            Bundle bundle = new Bundle();
+            bundle.putString(PayFragment.EXTRA_CONTENT, "提现：¥ " + 100.00);
+
+            PayFragment fragment = new PayFragment();
+            fragment.setArguments(bundle);
+            fragment.setPaySuccessCallBack(MapProductActivity.this);
+            fragment.show(getSupportFragmentManager(), "Pay");
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -243,10 +298,14 @@ public class MapProductActivity extends AppCompatActivity {
         Button user_pro_subtract;
         Button user_pro_add;
         TextView user_pro_buy_amount;
+        Button user_pro_clearing;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+    private void contextDialog(Context context, String errormsg){
+        new ContextDialog(this.context,errormsg).show();
     }
 }

@@ -67,12 +67,12 @@ public class MapUtil {
                                 jarr.put(ob);
                             }
                         }
-                        ProDialog pd = new ProDialog(context,jarr);
-                        pd.show();
+//                        ProDialog pd = new ProDialog(context,jarr);
+//                        pd.show();
 
-//                        Intent intentd  = new Intent(context,Ma);
-//                        intentd.putExtra("jsonArry", jarr.toString());
-//                        context.startActivity(intentd);
+                        Intent intentd  = new Intent(context,MapProductActivity.class);
+                        intentd.putExtra("jsonArray", jarr.toString());
+                        context.startActivity(intentd);
                     }catch (Exception e){
                         e.printStackTrace();
                     }

@@ -490,4 +490,12 @@
     <color name="__picker_text_120">#787878</color>
     <color name="__picker_item_photo_border_selected">#ff99cc00</color>
     <color name="__picker_item_photo_border_n">#33ffffff</color>
+
+
+    <color name="gray_text">#919191</color>
+    <color name="gray_btn">#EBEBEB</color>
+
+    <color name="gray_bg">#f0eff5</color>
+    <color name="gray_line">#ebebeb</color>
+    <color name="black_text">#212121</color>
 </resources>

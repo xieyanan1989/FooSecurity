@@ -5,9 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDialog;
+import android.support.v7.widget.AppCompatDrawableManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -20,10 +24,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.fsapp.sunsi.foosecurity.LoginActivity;
 import com.fsapp.sunsi.foosecurity.R;
+import com.fsapp.sunsi.foosecurity.pay.PayFragment;
+import com.fsapp.sunsi.foosecurity.pay.PayPwdView;
 import com.fsapp.sunsi.foosecurity.util.DBUtil;
 import com.fsapp.sunsi.foosecurity.util.HttpRequest;
 import com.fsapp.sunsi.foosecurity.util.ImagesTransformation;
@@ -41,7 +48,7 @@ import java.util.Map;
  * Created by xyn-pc on 2018/4/7.
  */
 
-public class ProDialog extends Dialog {
+public class ProDialog extends Dialog implements  PayPwdView.InputCallBack{
     private JSONArray jsonArry;
     private Context context;
     private ListView pro_pros;
@@ -95,6 +102,12 @@ public class ProDialog extends Dialog {
     public void onBackPressed() {
         super.onBackPressed();
         cancel();
+    }
+
+
+    @Override
+    public void onInputFinish(String result) {
+        Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
     }
 
     public interface OnButtonOnClickListener {
@@ -235,10 +248,21 @@ public class ProDialog extends Dialog {
                         contextDialog(context,"数据库写入异常");
                     }
                 }else {
-//                    paymethod();
+                    //支付方式
+                    paymethod();
                 }
             }
         });
+    }
+
+    private void paymethod() {
+        Bundle bundle = new Bundle();
+        bundle.putString(PayFragment.EXTRA_CONTENT, "提现：¥ " + 100.00);
+
+        PayFragment fragment = new PayFragment();
+        fragment.setArguments(bundle);
+        fragment.setPaySuccessCallBack((PayPwdView.InputCallBack) context);
+//        fragment.show(context.getSupportFragmentManager(), "Pay");
     }
 
     private void countAdd(final Button user_pro_saleCount, final int saleCount, final int currCount, final TextView userProSaleCount, final TextView user_pro_buy_amount, final Double proPrice) {
