@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.fsapp.sunsi.foosecurity.util.ImagesTransformation;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -125,6 +127,8 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
                     holder.user_pro_add= (Button) convertView.findViewById(R.id.user_pro_add);
                     holder.user_pro_buy_amount = (TextView) convertView.findViewById(R.id.user_pro_buy_amount);
                     holder.user_pro_clearing= (Button) convertView.findViewById(R.id.user_pro_clearing);
+                    holder.user_pro_buy_ya_amount = (TextView) convertView.findViewById(R.id.user_pro_buy_ya_amount);
+                    holder.user_pro_ya = (LinearLayout) convertView.findViewById(R.id.user_pro_ya);
                     convertView.setTag(holder);
                 } else {
                     holder = (ViewHolder) convertView.getTag();
@@ -134,19 +138,23 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
                 int saletype = jsonObject.getInt("saletype");
                 if(saletype == 1){
                     holder.user_pro_saletype.setText("预售");
+                    holder.user_pro_ya.setVisibility(View.VISIBLE);
                 }else{
                     holder.user_pro_saletype.setText("在售");
                 }
                 holder.user_pro_title.setText(jsonObject.getString("saletitle"));
                 holder.user_pro_saleCountMea.setText(jsonObject.getString("salecount")+jsonObject.getString("salemea"));
                 Double proPrice = Double.parseDouble(jsonObject.getString("proPrice"));
+                BigDecimal price = new BigDecimal(proPrice);
                 holder.user_pro_buy_amount.setText(jsonObject.getString("proPrice"));
 //                holder.user_pro_saleCount.setText(jsonObject.getString("salecount"));
                 int salesingle = jsonObject.getInt("salesingle");
+                int saleCount =Integer.parseInt(jsonObject.getString("salecount"));
                 if(salesingle == 1){
                     holder.user_pro_saleSingle.setText("单卖");
                 }else{
                     holder.user_pro_saleSingle.setText("整售");
+                    holder.user_pro_saleCount.setText(saleCount);
                 }
                 List<ImageView> imageViewList = new ArrayList<ImageView>();
                 String[] imgUrls = jsonObject.get("imgurl").toString().split("\\/");
@@ -155,16 +163,20 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
                     Glide.with(context).load(HttpRequest.img_url+imgUrls[0]+"/"+url).into(imageView);
                     imageViewList.add(imageView);
                 }
+                int currCount =Integer.parseInt((String) holder.user_pro_saleCount.getText());
                 //将下载下来的图片加载到viewAdapter
                 showimgs(holder.user_pro_imgs,convertView,imageViewList);
-                int saleCount =Integer.parseInt(jsonObject.getString("salecount"));
-                int currCount =Integer.parseInt((String) holder.user_pro_saleCount.getText());
-                //减少数量的事件
-                countSubtract(holder.user_pro_subtract,currCount,holder.user_pro_saleCount,holder.user_pro_buy_amount,proPrice);
-                //增加数量的事件
-                countAdd(holder.user_pro_add,saleCount,currCount,holder.user_pro_saleCount,holder.user_pro_buy_amount,proPrice);
+                //单卖时才有点击事件
+                if(salesingle == 1){
+                    //减少数量的事件
+                    countSubtract(holder.user_pro_subtract,currCount,holder.user_pro_saleCount,holder.user_pro_buy_amount,price,holder.user_pro_buy_ya_amount);
+                    //增加数量的事件
+                    countAdd(holder.user_pro_add,saleCount,currCount,holder.user_pro_saleCount,holder.user_pro_buy_amount,price,holder.user_pro_buy_ya_amount);
+                }
+                //预售金额
+                setyu(currCount,price,holder.user_pro_buy_ya_amount,salesingle);
                 //结算事件
-                clearing(holder.user_pro_clearing,jsonObject);
+                clearing(holder.user_pro_clearing,jsonObject,holder.user_pro_buy_ya_amount);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -173,7 +185,15 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
         }
     }
 
-    private void clearing(Button user_pro_clearing,final JSONObject jsonObject) {
+    private void setyu(int currCount, BigDecimal price, TextView user_pro_buy_ya_amount, int salesingle) {
+        if(salesingle == 1){
+            user_pro_buy_ya_amount.setText(""+(price.multiply(new BigDecimal(currCount)).multiply(new BigDecimal(0.2)).setScale(2,BigDecimal.ROUND_DOWN)));
+        }else{
+            user_pro_buy_ya_amount.setText(""+(price.multiply(new BigDecimal(currCount)).setScale(2,BigDecimal.ROUND_DOWN)));
+        }
+    }
+
+    private void clearing(Button user_pro_clearing, final JSONObject jsonObject,final TextView user_pro_buy_ya_amount) {
         user_pro_clearing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,22 +205,23 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
                     if (success ==0 ){
                         Intent intentd  = new Intent(context,LoginActivity.class);
                         intentd.putExtra("send","buy");
+                        intentd.putExtra("user_pro_buy_ya_amount",user_pro_buy_ya_amount.getText());
                         context.startActivity(intentd);
                     }else {
                         contextDialog(context,"数据库写入异常");
                     }
                 }else {
                     //支付方式
-                    paymethod();
+                    paymethod(jsonObject,user_pro_buy_ya_amount.getText().toString());
                 }
             }
         });
     }
 
-    private void paymethod() {
+    private void paymethod(JSONObject jsonObject, String yaAmount) {
         try {
             Bundle bundle = new Bundle();
-            bundle.putString(PayFragment.EXTRA_CONTENT, "提现：¥ " + 100.00);
+            bundle.putString(PayFragment.EXTRA_CONTENT, jsonObject.get("saletitle")+"\n¥ " + yaAmount);
 
             PayFragment fragment = new PayFragment();
             fragment.setArguments(bundle);
@@ -211,27 +232,29 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
         }
     }
 
-    private void countAdd(final Button user_pro_saleCount, final int saleCount, final int currCount, final TextView userProSaleCount, final TextView user_pro_buy_amount, final Double proPrice) {
+    private void countAdd(final Button user_pro_saleCount, final int saleCount, final int currCount, final TextView userProSaleCount, final TextView user_pro_buy_amount, final BigDecimal proPrice,final TextView user_pro_buy_ya_amount) {
         user_pro_saleCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int count  =Integer.parseInt((String) userProSaleCount.getText())+1;
                 if(saleCount >= count){
                     userProSaleCount.setText(""+count);
-                    user_pro_buy_amount.setText(""+(proPrice*count));
+                    user_pro_buy_amount.setText(""+(proPrice.multiply(new BigDecimal(count))));
+                    user_pro_buy_ya_amount.setText(""+(proPrice.multiply(new BigDecimal(count)).multiply(new BigDecimal(0.2)).setScale(2,BigDecimal.ROUND_DOWN)));
                 }
             }
         });
     }
 
-    private void countSubtract(final Button user_pro_saleCount, final int currCount,final TextView pro_saleCount, final TextView user_pro_buy_amount,final Double proPrice) {
+    private void countSubtract(final Button user_pro_saleCount, final int currCount, final TextView pro_saleCount, final TextView user_pro_buy_amount, final BigDecimal proPrice,final TextView user_pro_buy_ya_amount) {
         user_pro_saleCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int count  =Integer.parseInt((String) pro_saleCount.getText())-1;
                 if(count >= 1){
                     pro_saleCount.setText(""+count);
-                    user_pro_buy_amount.setText(""+(proPrice*count));
+                    user_pro_buy_amount.setText(""+(proPrice.multiply(new BigDecimal(count))));
+                    user_pro_buy_ya_amount.setText(""+(proPrice.multiply(new BigDecimal(count)).multiply(new BigDecimal(0.2)).setScale(2,BigDecimal.ROUND_DOWN)));
                 }
             }
         });
@@ -299,6 +322,8 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
         Button user_pro_add;
         TextView user_pro_buy_amount;
         Button user_pro_clearing;
+        LinearLayout user_pro_ya;
+        TextView user_pro_buy_ya_amount;
     }
 
     @Override

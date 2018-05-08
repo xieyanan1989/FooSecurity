@@ -183,6 +183,8 @@ public class ProDialog extends Dialog implements  PayPwdView.InputCallBack{
                     holder.user_pro_add= (Button) convertView.findViewById(R.id.user_pro_add);
                     holder.user_pro_buy_amount = (TextView) convertView.findViewById(R.id.user_pro_buy_amount);
                     holder.user_pro_clearing= (Button) convertView.findViewById(R.id.user_pro_clearing);
+                    holder.user_pro_buy_yaamount = (TextView) convertView.findViewById(R.id.user_pro_buy_ya_amount);
+                    holder.user_pro_ya = (LinearLayout) convertView.findViewById(R.id.user_pro_ya);
                     convertView.setTag(holder);
                 } else {
                     holder = (ViewHolder) convertView.getTag();
@@ -192,6 +194,7 @@ public class ProDialog extends Dialog implements  PayPwdView.InputCallBack{
                 int saletype = jsonObject.getInt("saletype");
                 if(saletype == 1){
                     holder.user_pro_saletype.setText("预售");
+                    holder.user_pro_ya.setVisibility(View.VISIBLE);
                 }else{
                     holder.user_pro_saletype.setText("在售");
                 }
@@ -353,5 +356,7 @@ public class ProDialog extends Dialog implements  PayPwdView.InputCallBack{
         Button user_pro_add;
         TextView user_pro_buy_amount;
         Button user_pro_clearing;
+        LinearLayout user_pro_ya;
+        TextView user_pro_buy_yaamount;
     }
 }
