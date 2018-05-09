@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.fsapp.sunsi.foosecurity.R;
+import com.fsapp.sunsi.foosecurity.util.DBUtil;
 
 /**
  * Created by Laiyimin on 2017/4/20.
@@ -35,7 +36,6 @@ public class PayFragment extends DialogFragment implements View.OnClickListener 
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 设置Content前设定
             dialog.setContentView(R.layout.fragment_pay);
             dialog.setCanceledOnTouchOutside(false); // 外部点击取消
-
             // 设置宽度为屏宽, 靠近屏幕底部。
             final Window window = dialog.getWindow();
             window.setWindowAnimations(R.style.AnimBottom);
@@ -57,7 +57,8 @@ public class PayFragment extends DialogFragment implements View.OnClickListener 
             TextView tv_content = (TextView) dialog.findViewById(R.id.tv_content);
             tv_content.setText(bundle.getString(EXTRA_CONTENT));
         }
-
+        TextView pay_bank_bonus = (TextView) dialog.findViewById(R.id.pay_bank_bonus);
+        pay_bank_bonus.setText(bundle.getString("bonus"));
         psw_input = (PayPwdView) dialog.findViewById(R.id.payPwdView);
         PwdInputMethodView inputMethodView = (PwdInputMethodView) dialog.findViewById(R.id.inputMethodView);
         psw_input.setInputMethodView(inputMethodView);

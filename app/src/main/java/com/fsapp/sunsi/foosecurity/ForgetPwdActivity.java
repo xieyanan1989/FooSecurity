@@ -201,10 +201,10 @@ public class ForgetPwdActivity extends AppCompatActivity {
                         Map map = db.querUserById();
                         int count = (int) map.get("count");
                         if(count == 0){
-                            db.insertUser(userName,"123456",true);
+                            db.insertUser(userName,"123456",true,ob.getString("bonus"));
                             intentModify();
                         }else if(count == 1){
-                            db.updateUser(userName,"123456",true);
+                            db.updateUser(userName,"123456",true,ob.getString("bonus"));
                             intentModify();
                         }else{
                             errormsg = UTIL.errorCode("1013")+"count:"+count;

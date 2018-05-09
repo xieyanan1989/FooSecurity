@@ -292,9 +292,9 @@ public class RegistUserImgActivity extends AppCompatActivity {
                         Map mapReturn = db.querUserById();
                         int count = (int) mapReturn.get("count");
                         if(count == 0){
-                            db.insertUser((String)map.get("username"),(String)map.get("pwd"),true);
+                            db.insertUser((String)map.get("username"),(String)map.get("pwd"),true,ob.getString("bonus"));
                         }else if(count == 1){
-                            db.updateUser((String)map.get("username"),(String)map.get("pwd"),true);
+                            db.updateUser((String)map.get("username"),(String)map.get("pwd"),true,ob.getString("bonus"));
                         }else{
                             errormsg = UTIL.errorCode("1013")+"count:"+count;
                             msg = new Message();

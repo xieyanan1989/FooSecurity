@@ -222,7 +222,8 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
         try {
             Bundle bundle = new Bundle();
             bundle.putString(PayFragment.EXTRA_CONTENT, jsonObject.get("saletitle")+"\n¥ " + yaAmount);
-
+            DBUtil dbUtil = new DBUtil(context);
+            bundle.putString("bonus","¥ "+dbUtil.querUser().get("bonus").toString());
             PayFragment fragment = new PayFragment();
             fragment.setArguments(bundle);
             fragment.setPaySuccessCallBack(MapProductActivity.this);

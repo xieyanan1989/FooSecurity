@@ -28,7 +28,7 @@ public class DBUtil extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             Log.i("Line", "52");
-            db.execSQL("CREATE TABLE IF NOT EXISTS BA_USER_INFO (USER_NAME VARCHAR,LOGIN_PWD VARCHAR,PAY_PWD VARCHAR,CHECKED INTEGER)");
+            db.execSQL("CREATE TABLE IF NOT EXISTS BA_USER_INFO (USER_NAME VARCHAR,LOGIN_PWD VARCHAR,PAY_PWD VARCHAR,CHECKED INTEGER,BONUS VARCHAR)");
             db.execSQL("CREATE TABLE IF NOT EXISTS BA_PRO_INFO (USER_NAME VARCHAR,PRO_ID VARCHAR,CATE_ID VARCHAR,CATE_NAME VARCHAR,PROVINCE_ID VARCHAR,CITY_ID VARCHAR,DISTRICT_ID VARCHAR,TOWN_ID VARCHAR,COUNTRY_ID VARCHAR,SALE_TYPE VARCHAR,SALE_DETAIL VARCHAR,SALE_TITLE VARCHAR,IMG_URL VARCHAR,SALE_COUNT VARCHAR,SALE_MEA VARCHAR,B_LOG VARCHAR,B_LAT VARCHAR,SALE_SINGLE VARCHAR,GEO_HASH VARCHAR,PRO_PRICE VARCHAR)");
         }catch (Exception e){
             e.printStackTrace();
@@ -46,12 +46,13 @@ public class DBUtil extends SQLiteOpenHelper {
         Cursor cursor = null;
         try{
             db = this.getWritableDatabase();
-            cursor = db.rawQuery("SELECT USER_NAME,LOGIN_PWD,PAY_PWD,CHECKED FROM BA_USER_INFO", null);
+            cursor = db.rawQuery("SELECT USER_NAME,LOGIN_PWD,PAY_PWD,CHECKED,BONUS FROM BA_USER_INFO", null);
             while (cursor.moveToNext()) {
                 map.put("userName",cursor.getString(0));
                 map.put("loginPwd",cursor.getString(1));
                 map.put("payPwd",cursor.getString(2));
                 map.put("checked",cursor.getString(3));
+                map.put("bonus",cursor.getString(4));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -116,7 +117,7 @@ public class DBUtil extends SQLiteOpenHelper {
         return success;
     }
 
-    public void updateUser(String username, String passwd, boolean ischeck) {
+    public void updateUser(String username, String passwd, boolean ischeck,String bonus) {
         SQLiteDatabase db = null;
         int num = 1;
         if(ischeck == false){
@@ -124,7 +125,7 @@ public class DBUtil extends SQLiteOpenHelper {
         }
         try{
             db = this.getWritableDatabase();
-            db.execSQL("UPDATE BA_USER_INFO SET LOGIN_PWD = ?,CHECKED =? , USER_NAME = ?",new Object[]{passwd,num,username});
+            db.execSQL("UPDATE BA_USER_INFO SET LOGIN_PWD = ?,CHECKED =? , USER_NAME = ?,BONUS",new Object[]{passwd,num,username,bonus});
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -132,7 +133,7 @@ public class DBUtil extends SQLiteOpenHelper {
         }
     }
 
-    public int insertUser(String username,String pwd,boolean ischeck) {
+    public int insertUser(String username,String pwd,boolean ischeck,String bonus) {
         map = new HashMap();
         SQLiteDatabase db = null;
         int num = 1;
@@ -141,7 +142,7 @@ public class DBUtil extends SQLiteOpenHelper {
         }
         try{
             db = this.getWritableDatabase();
-            db.execSQL("INSERT INTO BA_USER_INFO(USER_NAME,LOGIN_PWD,PAY_PWD,CHECKED) VALUES("+ username+ "," + pwd + "," + pwd + "," + num + ")");
+            db.execSQL("INSERT INTO BA_USER_INFO(USER_NAME,LOGIN_PWD,PAY_PWD,CHECKED,BONUS) VALUES("+ username+ "," + pwd + "," + pwd + "," + num + "," + bonus + ")");
         }catch (Exception e){
             e.printStackTrace();
         }finally {

@@ -147,9 +147,9 @@ public class LoginActivity extends AppCompatActivity {
                                 int count = (int) map.get("count");
                                 checked = isCheck.isChecked();
                                 if(count == 0){
-                                    db.insertUser(username,passwd,checked);
+                                    db.insertUser(username,passwd,checked,ob.getString("bonus"));
                                 }else if(count == 1){
-                                    db.updateUser(username,passwd,checked);
+                                    db.updateUser(username,passwd,checked,ob.getString("bonus"));
                                 }else{
                                     errormsg = UTIL.errorCode("1013")+"count:"+count;
                                     msg = new Message();
@@ -158,9 +158,13 @@ public class LoginActivity extends AppCompatActivity {
                                     // 发送message值给Handler接收
                                     allhand.sendMessage(msg);
                                 }
-                                if (getIntent().getStringExtra("send").equals("buy")){
-                                    Intent intentd = new Intent(context,BuyProActivity.class);
-                                    startActivity(intentd);
+                                if (getIntent().getStringExtra("send")!=null){
+                                    if(getIntent().getStringExtra("send").equals("buy")){
+                                        Intent intentd = new Intent(context,BuyProActivity.class);
+                                        startActivity(intentd);
+                                    }else{
+                                        finish();
+                                    }
                                 }else{
                                     finish();
                                 }

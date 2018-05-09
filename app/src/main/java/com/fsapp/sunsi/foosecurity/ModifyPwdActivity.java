@@ -63,7 +63,7 @@ public class ModifyPwdActivity extends AppCompatActivity {
                         String result = HttpRequest.sendPost("user/reset",paramMap);
                         JSONObject ob = UTIL.StringGetMap(result);
                         if (ob.getString("msg").equals("0")){
-                                db.updateUser(userName,passwd.getText().toString(),true);
+                                db.updateUser(userName,passwd.getText().toString(),true,ob.getString("bonus"));
                                 Intent intentd = new Intent(context, MainActivity.class);
                                 startActivity(intentd);
                         }else{
