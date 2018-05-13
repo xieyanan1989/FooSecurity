@@ -21,12 +21,12 @@ public class Settings {
     //押金
     public static String deposit;
     public static void clear(){
-        userName="";
-        proId="";
-        saleCount="";
-        saleMea="";
-        payPwd="";
-        deposit="";
+        Settings.userName="";
+        Settings.proId="";
+        Settings.saleCount="";
+        Settings.saleMea="";
+        Settings.payPwd="";
+        Settings.deposit="";
     }
 
     public static void put(String userName,String proId,String saleCount,String saleMea,String payPwd,String deposit){
