@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +32,9 @@ import com.fsapp.sunsi.foosecurity.pay.PayPwdView;
 import com.fsapp.sunsi.foosecurity.util.DBUtil;
 import com.fsapp.sunsi.foosecurity.util.HttpRequest;
 import com.fsapp.sunsi.foosecurity.util.ImagesTransformation;
+import com.fsapp.sunsi.foosecurity.util.MapUtil;
+import com.fsapp.sunsi.foosecurity.util.Settings;
+import com.fsapp.sunsi.foosecurity.util.UTIL;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,6 +52,7 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
     private ListViewAdapter lv_adapter;
     private Map map = new HashMap();
     private int pagerWidth;
+    String errormsg ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +79,44 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
 
     @Override
     public void onInputFinish(String result) {
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+        Settings.payPwd= result.trim();
+        inserPro();
+    }
+
+    private void inserPro() {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Map map = Settings.get();
+                        String json = UTIL.AjaxJson(map);
+                        String sig = HttpRequest.md5(json);
+                        Map<String,String> paramMap = new HashMap<String, String>();
+                        paramMap.put("json",json);
+                        paramMap.put("sig", sig);
+                        String result = HttpRequest.sendPost("pro/contract",paramMap);
+                        JSONObject ob = UTIL.StringGetMap(result);
+                        if (ob.getString("msg").equals("0")){
+                            errormsg = "购买成功";
+                            Message msg = new Message();
+                            msg.what = 1;
+                            allhand.removeMessages(1);
+                            // 发送message值给Handler接收
+                            allhand.sendMessage(msg);
+                        }else{
+                        errormsg = UTIL.errorCode(ob.getString("msg"));
+                        Message msg = new Message();
+                        msg.what = 1;
+                            allhand.removeMessages(1);
+                        // 发送message值给Handler接收
+                            allhand.sendMessage(msg);
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
     }
 
     class ListViewAdapter extends BaseAdapter {
@@ -176,7 +219,7 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
                 //预售金额
                 setyu(currCount,price,holder.user_pro_buy_ya_amount,salesingle);
                 //结算事件
-                clearing(holder.user_pro_clearing,jsonObject,holder.user_pro_buy_ya_amount);
+                clearing(holder.user_pro_clearing,jsonObject,holder.user_pro_buy_ya_amount,holder.user_pro_saleCount);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -193,7 +236,7 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
         }
     }
 
-    private void clearing(Button user_pro_clearing, final JSONObject jsonObject,final TextView user_pro_buy_ya_amount) {
+    private void clearing(Button user_pro_clearing, final JSONObject jsonObject, final TextView user_pro_buy_ya_amount,final TextView user_pro_saleCount) {
         user_pro_clearing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -208,10 +251,17 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
                         intentd.putExtra("user_pro_buy_ya_amount",user_pro_buy_ya_amount.getText());
                         context.startActivity(intentd);
                     }else {
-                        contextDialog(context,"数据库写入异常");
+                        contextDialog("数据库写入异常");
                     }
                 }else {
                     //支付方式
+                    Settings.clear();
+                    Map quryMap = db.querUser();
+                    try {
+                        Settings.put(userName,jsonObject.getString("proid"),user_pro_saleCount.getText().toString(),jsonObject.getString("salemea"),"",user_pro_buy_ya_amount.getText().toString());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     paymethod(jsonObject,user_pro_buy_ya_amount.getText().toString());
                 }
             }
@@ -331,7 +381,19 @@ public class MapProductActivity extends AppCompatActivity implements PayPwdView.
     protected void onDestroy() {
         super.onDestroy();
     }
-    private void contextDialog(Context context, String errormsg){
+    private void contextDialog( String errormsg){
         new ContextDialog(this.context,errormsg).show();
     }
+
+    Handler allhand = new Handler(){
+        public void handleMessage(Message msg) {
+            this.obtainMessage();
+            // 更新UI
+            switch (msg.what) {
+                case 1:
+                    contextDialog(errormsg);
+                    break;
+            }
+        }
+    };
 }

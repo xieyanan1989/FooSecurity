@@ -72,6 +72,9 @@ public class UTIL {
             case 1016:
                 error = "用户不存在";
                 break;
+            case 1017:
+                error = "支付密码不正确";
+                break;
 
         }
         return error;
