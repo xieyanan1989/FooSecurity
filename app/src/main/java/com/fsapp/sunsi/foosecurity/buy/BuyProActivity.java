@@ -34,6 +34,7 @@ import com.fsapp.sunsi.foosecurity.util.UTIL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -430,9 +431,11 @@ public class BuyProActivity extends AppCompatActivity {
                 }else{
                     holder.book_user_pro_catetype.setText("野生");
                 }
+                BigDecimal salecount = new BigDecimal(jsonObject.getString("salecount"));
+                BigDecimal amount = new BigDecimal(jsonObject.getString("amount"));
                 holder.book_user_pro_title.setText(jsonObject.getString("saletitle"));
-                holder.book_user_pro_saleCountMea.setText(jsonObject.getString("salecount")+jsonObject.getString("salemea"));
-                holder.boo_user_pro_buy_amount.setText(jsonObject.getString("amount"));
+                holder.book_user_pro_saleCountMea.setText(salecount+jsonObject.getString("salemea"));
+                holder.boo_user_pro_buy_amount.setText(salecount.multiply(amount).toString());
                 holder.book_user_pro_buy_ya_amount.setText(jsonObject.getString("deposit"));
                 List<ImageView> imageViewList = new ArrayList<ImageView>();
                 String[] imgUrls = jsonObject.get("imgurl").toString().split("\\/");

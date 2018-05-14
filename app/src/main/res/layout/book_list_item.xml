@@ -112,13 +112,13 @@
         <LinearLayout
             android:layout_width="@dimen/all_zero"
             android:layout_height="match_parent"
-            android:layout_weight="8"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_weight="5"
+            android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="@dimen/all_zero"
                     android:layout_height="match_parent"
-                    android:layout_weight="5">
+                    android:layout_weight="5"
+                    android:gravity="right">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -138,7 +138,8 @@
                 <LinearLayout
                     android:layout_width="@dimen/all_zero"
                     android:layout_height="match_parent"
-                    android:layout_weight="5">
+                    android:layout_weight="5"
+                    android:gravity="right">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
