@@ -292,7 +292,7 @@ public class RegistUserImgActivity extends AppCompatActivity {
                         Map mapReturn = db.querUserById();
                         int count = (int) mapReturn.get("count");
                         if(count == 0){
-                            db.insertUser((String)map.get("username"),(String)map.get("pwd"),true,ob.getString("bonus"));
+                            db.insertUser((String)map.get("username"),(String)map.get("pwd"),true,"0");
                         }else if(count == 1){
                             db.updateUser((String)map.get("username"),(String)map.get("pwd"),true,ob.getString("bonus"));
                         }else{
