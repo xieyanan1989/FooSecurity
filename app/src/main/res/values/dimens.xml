@@ -12,6 +12,8 @@
     <dimen name="all_fourteen">14dp</dimen>
     <dimen name="all_fifteen">15dp</dimen>
     <dimen name="all_twenty">20dp</dimen>
+    <dimen name="all_twenty_five">25dp</dimen>
+    <dimen name="all_twenty_eight">28dp</dimen>
     <dimen name="all_thirty">30dp</dimen>
     <dimen name="all_thirty_five">35dp</dimen>
     <dimen name="all_forty">40dp</dimen>
@@ -21,6 +23,7 @@
     <dimen name="all_eighty">80dp</dimen>
     <dimen name="all_ninety">90dp</dimen>
     <dimen name="all_hundred">100dp</dimen>
+    <dimen name="all_hundred_forty">140dp</dimen>
     <dimen name="all_hundred_two">200dp</dimen>
     <dimen name="all_hundred_three">300dp</dimen>
     <dimen name="all_hundred_four">400dp</dimen>
@@ -50,4 +53,10 @@
     <!-- 描述性文字item项的高 -->
     <dimen name="text_item_height">43dp</dimen>
     <dimen name="input_method_spacing">2px</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
 </resources>

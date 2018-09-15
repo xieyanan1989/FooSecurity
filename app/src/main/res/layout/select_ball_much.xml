@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/all_five"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <!-- 胆拖 -->
+            <RadioGroup
+                android:id="@+id/dubo_dan_tuo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:visibility="gone"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/select_ball_much_btn_towed_front"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:layout_marginRight="@dimen/all_twenty"
+                    android:checked="true"
+                    android:text="选号"
+                    android:textColor="@drawable/black_to_white_tx_selector"
+                    android:textSize="@dimen/all_twenty" />
+
+                <RadioButton
+                    android:id="@+id/select_ball_much_btn_towed_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:text="选胆"
+                    android:textColor="@drawable/black_to_white_tx_selector"
+                    android:textSize="@dimen/all_twenty" />
+            </RadioGroup>
+
+            <com.fsapp.sunsi.foosecurity.dubo.view.AutoWrapView
+                android:id="@+id/select_ball_much_auto_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            
+            
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dubo_chuanguan_select"
+    android:button="@null"
+    android:gravity="center"
+    android:text="01"
+    android:textColor="@drawable/black_to_white_tx_selector"
+    android:textSize="@dimen/all_fifteen"
+    android:padding="@dimen/all_fifteen"/>

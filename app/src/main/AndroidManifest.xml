@@ -109,8 +109,17 @@
         <activity
             android:name=".product.MapProductActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".buy.BuyProActivity"
+        <activity
+            android:name=".buy.BuyProActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".dubo.SsqActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".dubo.JCZQActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".dubo.JCActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

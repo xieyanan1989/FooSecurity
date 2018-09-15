@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/section_parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/FCFCFC"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+        <LinearLayout
+            android:layout_width="@dimen/all_zero"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9">
+            <TextView
+                android:id="@+id/header_section"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="@dimen/all_fifteen"
+                android:paddingLeft="@dimen/all_ten"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="@dimen/all_zero"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1">
+            <CheckBox
+                android:id="@+id/section_expend_cb"
+                android:layout_width="@dimen/all_forty"
+                android:layout_height="@dimen/all_forty"
+                android:background="@drawable/jingcai_down_or_up_selector"
+                android:button="@null"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/all_five"
+        android:background="@mipmap/horizontal_line">
+    </LinearLayout>
+
+</LinearLayout>
