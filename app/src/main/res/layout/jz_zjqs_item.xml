@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+         <RelativeLayout
+             android:layout_width="@dimen/all_zero"
+             android:layout_height="match_parent"
+             android:layout_weight="2" >
+
+             <TextView
+                 android:id="@+id/jc_matched_tx"
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:gravity="center"
+                 android:paddingRight="5dp"
+                 android:text="456"
+                 android:textColor="@color/black"
+                 android:textSize="@dimen/all_thirteen" />
+
+             <ImageView
+                 android:id="@+id/item_single"
+                 android:layout_width="@dimen/all_fifteen"
+                 android:layout_height="@dimen/all_fifteen"
+                 android:layout_alignParentTop="true"
+                 android:background="@mipmap/single"
+                 android:visibility="gone" />
+         </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/all_zero"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/all_fifteen"
+                android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/item_home_tx"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/all_twenty"
+                        android:layout_marginLeft="@dimen/all_fifteen"
+                        android:gravity="center"
+                        android:text="清水鼓动 VS 大阪钢巴"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/all_fifteen" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:id="@+id/main_grid_view_show"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/all_fifteen"
+                    android:layout_marginRight="@dimen/all_fifteen"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/all_five"
+        android:background="@mipmap/horizontal_line" >
+    </LinearLayout>
+
+</LinearLayout>

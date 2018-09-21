@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent"
+	android:layout_marginLeft="5dip"
+	android:layout_marginRight="5dip"
+	android:orientation="vertical"
+	android:background="@color/white">
+	<GridView
+		android:id="@+id/grid_view_show"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/all_fifteen"
+		android:layout_marginRight="@dimen/all_fifteen"
+		android:layout_marginTop="@dimen/all_fifteen"
+		android:columnWidth="@dimen/all_fifteen"
+		android:gravity="center"
+		android:horizontalSpacing="@dimen/all_fifteen"
+		android:orientation="vertical"
+		android:stretchMode="columnWidth"
+		android:listSelector="@mipmap/ic_launcher_round"
+		android:verticalSpacing="@dimen/all_fifteen" >
+	</GridView>
+
+	<LinearLayout
+		android:id="@+id/money_not_allowed_bottom"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/all_fifteen"
+		android:gravity="center">
+		<!--<Button-->
+			<!--android:id="@+id/money_not_allowed_btn_cancel"-->
+			<!--android:layout_width="@dimen/all_forty"-->
+			<!--android:layout_height="@dimen/all_forty"-->
+			<!--android:layout_marginRight="@dimen/all_fifteen"-->
+			<!--android:textSize="@dimen/all_fifteen"-->
+			<!--android:paddingTop="@dimen/all_fifteen"-->
+			<!--android:paddingBottom="@dimen/all_fifteen"-->
+			<!--android:layout_marginBottom="@dimen/all_fifteen"-->
+			<!--android:background="@color/red"-->
+			<!--android:textColor="@color/white"-->
+			<!--android:text="关闭"/>-->
+		<Button
+			android:id="@+id/money_not_allowed_btn_cancel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/button_corner_red"
+			android:text="确 定"
+			android:textColor="@color/white"
+			android:textStyle="bold"
+			android:layout_marginBottom="@dimen/all_five"/>
+	</LinearLayout>
+	
+</LinearLayout>

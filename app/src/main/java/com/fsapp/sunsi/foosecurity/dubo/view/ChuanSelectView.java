@@ -1,15 +1,10 @@
 package com.fsapp.sunsi.foosecurity.dubo.view;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.fsapp.sunsi.foosecurity.R;
-import com.fsapp.sunsi.foosecurity.dubo.bean.PlayBean;
 import com.fsapp.sunsi.foosecurity.dubo.util.Tools;
 
 import java.util.ArrayList;
@@ -39,6 +34,14 @@ public class ChuanSelectView {
 			view.setId(i+0);
 			listViews.add(view);
 			mScroll.addView(view);
+			view.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					if(onClick != null){
+						onClick.onClick(view);
+					}
+				}
+			});
 		}
 	}
 
@@ -54,7 +57,15 @@ public class ChuanSelectView {
 		}
 		this.show = show;
 	}
-	
+
+	public List<CheckBox> getListViews() {
+		return listViews;
+	}
+
+	public void setListViews(List<CheckBox> listViews) {
+		this.listViews = listViews;
+	}
+
 	/**
 	 * SelectView 的点击事件
 	 * @param onClick
@@ -66,4 +77,19 @@ public class ChuanSelectView {
 	public interface OnClickPlaySelect{
 		public void onClick(View v);
 	}
+	public List<Integer> getSelectChuan(){
+		List<Integer> list = new ArrayList<Integer>();
+		for (int i = 0 ; i < listViews.size(); i++){
+			if(listViews.get(i).isChecked()){
+				list.add(i+1);
+			}
+		}
+		return list;
+	}
+
+	public void setUnCeck(int size){
+		for (int i = size ; i < listViews.size(); i++){
+			listViews.get(i).setChecked(false);
+			}
+		}
 }

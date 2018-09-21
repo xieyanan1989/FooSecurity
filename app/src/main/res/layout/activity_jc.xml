@@ -37,13 +37,28 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_above="@+id/jc_chuan_show">
-            <com.fsapp.sunsi.foosecurity.dubo.view.AmazingListView
-                android:id="@+id/jc_section_list_view"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@color/none"
-                android:cacheColorHint="@color/none"
-                android:divider="@color/none" />
+            <FrameLayout
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical" >
+                <com.fsapp.sunsi.foosecurity.dubo.view.AmazingListView
+                    android:id="@+id/jc_section_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/none"
+                    android:cacheColorHint="@color/none"
+                    android:divider="@color/none"/>
+
+                <ProgressBar
+                    android:id="@+id/loadding_progressbar_m"
+                    style="@android:style/Widget.ProgressBar.Large.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+            </FrameLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -152,10 +167,64 @@
         <LinearLayout
             android:id="@+id/jc_bottom_show"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/all_forty"
-            android:orientation="vertical"
+            android:layout_height="@dimen/all_sixty"
+            android:orientation="horizontal"
             android:layout_alignParentBottom="true"
             android:background="@color/black">
+            <LinearLayout
+                android:id="@+id/jc_bet_delete"
+                android:layout_width="@dimen/all_zero"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/img_rubish"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="@dimen/all_zero"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/jc_bet_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="投注金额0元"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    />
+                <TextView
+                    android:id="@+id/jc_bet_prize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="理论最高奖金0元"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="@dimen/all_zero"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+                <Button
+                    android:id="@+id/jc_bet_con"
+                    android:layout_width="@dimen/all_forty"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:background="@drawable/button_corner_red"
+                    android:text="确 定"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/all_five"
+                    android:layout_marginRight="@dimen/all_five"/>
+            </LinearLayout>
+
         </LinearLayout>
     </RelativeLayout>
 

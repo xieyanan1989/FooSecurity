@@ -4,8 +4,11 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import android.content.Context;
@@ -17,6 +20,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+
+import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchBean;
 
 /**
  * @author Jiang
@@ -341,5 +346,135 @@ public class Tools {
 		for(int i = MaxNum; i>MaxNum-FixNum; i--)
 			total *= i;
 		return total;
+	}
+	public static int getCount(List<Integer> list, List<JZMatchBean> selectMatchs, String lotteryId, String playMethod) {
+		Map<String,List> map = new HashMap<String,List>();
+		//拖赛事儿名称，用于分组
+		List tuoArr = new ArrayList();
+		int bettype = 0;
+		for(JZMatchBean bean: selectMatchs){
+			tuoArr.add(bean.getMatchno());
+			map.put(bean.getMatchno(),getList(lotteryId,playMethod,bean,0));
+			if ((list.get(0)==1) && (bean.getSingle().equals("1"))){
+				bettype += getList(lotteryId,playMethod,bean,0).size();
+			}
+		}
+		//计算金额与注数
+		for(int i = 0 ; i <list.size() ; i ++){
+			int required = list.get(i);
+			//单关处理
+			//单关处理
+			if(required == 1){
+				continue;
+			}
+			List fullCombinedArr = Arithmetic.fullCombinationDantuo(required, null, tuoArr);
+			bettype += Arithmetic.countCombinedArr(fullCombinedArr,map);
+		}
+		return bettype;
+	}
+	public static BigDecimal getPrize(List<Integer> list, List<JZMatchBean> selectMatchs, String lotteryId, String playMethod) {
+		Map<String,List> map = new HashMap<String,List>();
+		//拖赛事儿名称，用于分组
+		List tuoArr = new ArrayList();
+		BigDecimal money = new BigDecimal(0);
+		for(JZMatchBean bean: selectMatchs){
+			tuoArr.add(bean.getMatchno());
+			map.put(bean.getMatchno(), getList(lotteryId,playMethod,bean,1));
+            if ((list.get(0)==1) && (bean.getSingle().equals("1"))){
+				List<String> pvs = getList(lotteryId,playMethod,bean,1);
+				money = money.add( new BigDecimal((String)pvs.get(pvs.size()-1)));
+			}
+		}
+		//计算金额与注数
+		for(int i = 0 ; i <list.size() ; i ++){
+			int required = list.get(i);
+			//单关处理
+			if(required == 1){
+				continue;
+			}
+			List fullCombinedArr = Arithmetic.fullCombinationDantuo(required, null, tuoArr);
+			money = money.add(Arithmetic.countPrizeCombinedArr(fullCombinedArr,map));
+		}
+		money = money.multiply(new BigDecimal("2")).setScale(2,BigDecimal.ROUND_HALF_UP);
+		return money;
+	}
+
+	/**
+	 *
+	 * @param lotteryId
+	 * @param playType
+	 * @param bean
+	 * @param cp 0-注数，1-赔率
+	 * @return
+	 */
+	public static List<String> getList(String lotteryId,String playType,JZMatchBean bean, int cp){
+		switch (lotteryId){
+			case LotteryId.JCZQ:
+				switch (playType){
+					case LotteryId.PLAY_ID_01:
+						if (cp==0){
+							return bean.getJzspfList();
+						}else {
+							sort(bean.getJzspfPvList());
+							return bean.getJzspfPvList();
+						}
+					case LotteryId.PLAY_ID_02:
+						if (cp==0){
+							return bean.getJzrqspfLiset();
+						}else {
+							sort(bean.getJzrqspfPvLiset());
+							return bean.getJzrqspfPvLiset();
+						}
+					case LotteryId.PLAY_ID_03:
+						if (cp==0){
+							return bean.getJzzjqsList();
+						}else {
+							sort(bean.getJzzjqsPvList());
+							return bean.getJzzjqsPvList();
+						}
+					case LotteryId.PLAY_ID_04:
+						if (cp==0){
+							return bean.getJzbqcList();
+						}else {
+							sort(bean.getJzbqcPvList());
+							return bean.getJzbqcPvList();
+						}
+					case LotteryId.PLAY_ID_05:
+						if (cp==0){
+							return bean.getJzbfList();
+						}else {
+							sort(bean.getJzbfPvList());
+							return bean.getJzbfPvList();
+						}
+//					case LotteryId.PLAY_ID_06:
+//						if (cp==0){
+//							return bean.getJZ
+//						}else {
+//							return bean.getJzrqspfPvLiset();
+//						}
+//						break;
+				}
+				break;
+		}
+		return null;
+	}
+	/**
+	 * 冒泡排序 从小到大
+	 * @param value 排序的值
+	 * @return 排序结果
+	 */
+	public static List<String> sort(List<String> value){
+		String temp;
+		int len = value.size();
+		for(int i = 0; i < len; i++){
+			for(int j = len - 1; j > i; j--){
+				if(Double.parseDouble(value.get(i)) > Double.parseDouble(value.get(j))){
+					temp = value.get(j);
+					value.set(j,value.get(i));
+					value.set(i,temp);
+				}
+			}
+		}
+		return value;
 	}
 }

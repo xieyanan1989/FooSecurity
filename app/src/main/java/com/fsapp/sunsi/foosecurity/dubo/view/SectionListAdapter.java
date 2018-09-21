@@ -1,7 +1,6 @@
 package com.fsapp.sunsi.foosecurity.dubo.view;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,13 @@ import android.widget.TextView;
 import com.fsapp.sunsi.foosecurity.R;
 import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchBean;
 import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchListBean;
+import com.fsapp.sunsi.foosecurity.dubo.ticai.JZBFCLass;
+import com.fsapp.sunsi.foosecurity.dubo.ticai.JZBQCCLass;
+import com.fsapp.sunsi.foosecurity.dubo.ticai.JZRQSPFCLass;
 import com.fsapp.sunsi.foosecurity.dubo.ticai.JZSPFCLass;
+import com.fsapp.sunsi.foosecurity.dubo.ticai.JZZJQSCLass;
 import com.fsapp.sunsi.foosecurity.dubo.util.LotteryId;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,7 +43,7 @@ public class SectionListAdapter extends AmazingAdapter {
     }
 
     @Override
-    protected void bindSectionHeader(View view, int position, boolean displaySectionHeader) {
+    protected void bindSectionHeader(View view, final int position, boolean displaySectionHeader) {
         LinearLayout parentLayout = (LinearLayout) view.findViewById(R.id.section_parent_layout);
         if (displaySectionHeader) {
             parentLayout.setVisibility(View.VISIBLE);
@@ -50,11 +52,10 @@ public class SectionListAdapter extends AmazingAdapter {
             CheckBox section_expend_cb = (CheckBox) view.findViewById(R.id.section_expend_cb);
             lSectionTitle.setText(sectionString);
             section_expend_cb.setChecked(isSectionChecked(sectionString));
-            section_expend_cb.setClickable(false);
             parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onClickSection(sectionString);
+                    onClickSection(sectionString,position);
                 }
             });
         } else {
@@ -168,7 +169,7 @@ public class SectionListAdapter extends AmazingAdapter {
      *
      * @param sectionString
      */
-    private void onClickSection(String sectionString) {
+    private void onClickSection(String sectionString, int position) {
         try {
             for (JZMatchListBean bean : jzMatchListBeans) {
                 if (bean.getSection().equals(sectionString)) {
@@ -179,6 +180,7 @@ public class SectionListAdapter extends AmazingAdapter {
                         bean.setStatus(1);
                         this.notifyDataSetChanged();
                     }
+//                    sectionLV.setSelection(position-1);
                 }
             }
         } catch (Exception e) {
@@ -236,6 +238,51 @@ public class SectionListAdapter extends AmazingAdapter {
                 }
                 mJCItemClass.showItems(bean, parent_layout);
             }
+            if (playType.equals(LotteryId.PLAY_ID_02)) {
+                if (mJCItemClass == null) {
+                    mJCItemClass = new JZRQSPFCLass(context, inflater,lotteryId);
+                }
+                mJCItemClass.showItems(bean, parent_layout);
+            }
+            if (playType.equals(LotteryId.PLAY_ID_03)) {
+                if (mJCItemClass == null) {
+                    mJCItemClass = new JZZJQSCLass(context, inflater,lotteryId);
+                }
+                mJCItemClass.showItems(bean, parent_layout);
+            }
+            if (playType.equals(LotteryId.PLAY_ID_04)) {
+                if (mJCItemClass == null) {
+                    mJCItemClass = new JZBQCCLass(context, inflater,lotteryId);
+                }
+                mJCItemClass.showItems(bean, parent_layout);
+            }
+            if (playType.equals(LotteryId.PLAY_ID_05)) {
+                if (mJCItemClass == null) {
+                    mJCItemClass = new JZBFCLass(context, inflater,lotteryId);
+                }
+                mJCItemClass.showItems(bean, parent_layout);
+            }
+            if (playType.equals(LotteryId.PLAY_ID_06)) {
+                if (mJCItemClass == null) {
+                    mJCItemClass = new JZBFCLass(context, inflater,lotteryId);
+                }
+                mJCItemClass.showItems(bean, parent_layout);
+            }
         }
+        mJCItemClass.setBetOnClickListener(new JCAbstractClass.OnBetOnClickListener() {
+            @Override
+            public void onOkBtnClick(String lotteryId, String playMethod, JZMatchBean jzMatchBean, boolean status) {
+                if(onsEectionBetOnClickListener != null){
+                    onsEectionBetOnClickListener.onsEectionBetOnClickListener(lotteryId,playMethod,jzMatchBean,status);
+                }
+            }
+        });
+    }
+    private OnsEectionBetOnClickListener onsEectionBetOnClickListener;
+    public interface OnsEectionBetOnClickListener {
+        public void onsEectionBetOnClickListener(String lotteryId, String playMethod, JZMatchBean jzMatchBean, boolean status);
+    }
+    public void setOnsEectionBetOnClickListener(OnsEectionBetOnClickListener onsEectionBetOnClickListener) {
+        this.onsEectionBetOnClickListener = onsEectionBetOnClickListener;
     }
 }
