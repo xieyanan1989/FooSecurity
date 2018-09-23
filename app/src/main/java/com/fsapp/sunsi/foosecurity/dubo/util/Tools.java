@@ -446,13 +446,25 @@ public class Tools {
 							sort(bean.getJzbfPvList());
 							return bean.getJzbfPvList();
 						}
-//					case LotteryId.PLAY_ID_06:
-//						if (cp==0){
-//							return bean.getJZ
-//						}else {
-//							return bean.getJzrqspfPvLiset();
-//						}
-//						break;
+					case LotteryId.PLAY_ID_06:
+						if (cp==0){
+							List<String> countList = new ArrayList<String>();
+							countList.addAll(bean.getJzspfList());
+							countList.addAll(bean.getJzrqspfLiset());
+							countList.addAll(bean.getJzbqcList());
+							countList.addAll(bean.getJzzjqsList());
+							countList.addAll(bean.getJzbfList());
+							return countList;
+						}else {
+							List<String> pvList = new ArrayList<String>();
+							pvList.addAll(bean.getJzspfPvList());
+							pvList.addAll(bean.getJzrqspfPvLiset());
+							pvList.addAll(bean.getJzbqcPvList());
+							pvList.addAll(bean.getJzzjqsPvList());
+							pvList.addAll(bean.getJzbfPvList());
+							sort(pvList);
+							return pvList;
+						}
 				}
 				break;
 		}

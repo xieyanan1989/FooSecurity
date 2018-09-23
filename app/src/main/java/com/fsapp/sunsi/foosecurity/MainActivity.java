@@ -34,6 +34,7 @@ import com.fsapp.sunsi.foosecurity.buy.BuyProActivity;
 import com.fsapp.sunsi.foosecurity.dialogs.CatesDialog;
 import com.fsapp.sunsi.foosecurity.dialogs.ContextDialog;
 import com.fsapp.sunsi.foosecurity.dialogs.MainRegionDialog;
+import com.fsapp.sunsi.foosecurity.dubo.DuboMainActivity;
 import com.fsapp.sunsi.foosecurity.dubo.JCZQActivity;
 import com.fsapp.sunsi.foosecurity.dubo.SsqActivity;
 import com.fsapp.sunsi.foosecurity.product.AddProductActivity;
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 //                    mTextMessage.setText(R.string.nav_home);
 //                    intentd = new Intent(context, SsqActivity.class);
 //                    startActivity(intentd);
-                    intentd = new Intent(context, JCZQActivity.class);
+                    intentd = new Intent(context, DuboMainActivity.class);
                     startActivity(intentd);
                     return true;
                 case R.id.nav_buy:

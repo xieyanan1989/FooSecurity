@@ -51,6 +51,41 @@ public class PlayInfo {
 			mBean6.setPollId("01");
 			mBean6.setIcon(R.mipmap.jczq_hhgg);
 			mListPlayBeans.add(mBean6);
+		}else if(lid.equals(LotteryId.JCLQ)){
+			PlayBean mBean1 = new PlayBean();
+			mBean1.setPlayName("胜负");
+			mBean1.setPlayId("01");
+			mBean1.setPollId("01");
+			mBean1.setIcon(R.mipmap.play_jclq_01);
+			mListPlayBeans.add(mBean1);
+
+			PlayBean mBean2 = new PlayBean();
+			mBean2.setPlayName("让分胜负");
+			mBean2.setPlayId("02");
+			mBean2.setPollId("01");
+			mBean2.setIcon(R.mipmap.play_jclq_02);
+			mListPlayBeans.add(mBean2);
+
+			PlayBean mBean3 = new PlayBean();
+			mBean3.setPlayName("胜分差");
+			mBean3.setPlayId("03");
+			mBean3.setPollId("01");
+			mBean3.setIcon(R.mipmap.play_jclq_03);
+			mListPlayBeans.add(mBean3);
+
+			PlayBean mBean4 = new PlayBean();
+			mBean4.setPlayName("大小分");
+			mBean4.setPlayId("04");
+			mBean4.setPollId("01");
+			mBean4.setIcon(R.mipmap.play_jclq_04);
+			mListPlayBeans.add(mBean4);
+
+			PlayBean mBean5 = new PlayBean();
+			mBean5.setPlayName("混合过关");
+			mBean5.setPlayId("05");
+			mBean5.setPollId("01");
+			mBean5.setIcon(R.mipmap.play_jclq_05);
+			mListPlayBeans.add(mBean5);
 		}
 		
 		return mListPlayBeans;

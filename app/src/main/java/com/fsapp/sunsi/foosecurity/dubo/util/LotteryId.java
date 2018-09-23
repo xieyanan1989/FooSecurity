@@ -1,5 +1,8 @@
 package com.fsapp.sunsi.foosecurity.dubo.util;
 import com.fsapp.sunsi.foosecurity.R;
+import com.fsapp.sunsi.foosecurity.dubo.JCActivity;
+import com.fsapp.sunsi.foosecurity.dubo.JLActivity;
+import com.fsapp.sunsi.foosecurity.dubo.SsqActivity;
 
 public class LotteryId {
 	public static String INTENT_LID = "lid";
@@ -612,4 +615,76 @@ public class LotteryId {
 		}
 		return null;
 	}
+
+	public static int getLotteryIcon(String lid) {
+		if (lid.equals(LotteryId.SSQ))
+			return R.mipmap.icon_ssq;
+		if (lid.equals(LotteryId.D3))
+			return R.mipmap.icon_d3;
+		if (lid.equals(LotteryId.KL10))
+			return R.mipmap.icon_kl10;
+		if (lid.equals(LotteryId.QLC))
+			return R.mipmap.icon_qlc;
+		if (lid.equals(LotteryId.SSC))
+			return R.mipmap.icon_ssc;
+		//
+		if (lid.equals(LotteryId.DLT))
+			return R.mipmap.icon_dlt;
+		if (lid.equals(LotteryId.PL3))
+			return R.mipmap.icon_pl3;
+		if (lid.equals(LotteryId.PL5))
+			return R.mipmap.icon_pl5;
+		if (lid.equals(LotteryId.QXC))
+			return R.mipmap.icon_qxc;
+		if (lid.equals(LotteryId.SYXW))
+			return R.mipmap.icon_syxw;
+		if (lid.equals(LotteryId.CTZC))
+			return R.mipmap.icon_ctzc;
+		if (lid.equals(LotteryId.JCZQ))
+			return R.mipmap.icon_jczq;
+		if (lid.equals(LotteryId.JCLQ))
+			return R.mipmap.icon_jclq;
+		if (lid.equals(LotteryId.BJDC))
+			return R.mipmap.icon_bjdc;
+		if (lid.equals(LotteryId.YTDJ))
+			return R.mipmap.icon_ytdj;
+		return R.mipmap.icon_dlt;
+	}
+
+	public static Class<?> getLotteryClass(String lid) {
+		if (lid.equals(LotteryId.SSQ))
+			return SsqActivity.class;
+//		if (lid.equals(LotteryId.D3))
+//			return D3.class;
+//		if (lid.equals(LotteryId.KL10))
+//			return Kl10.class;
+//		if (lid.equals(LotteryId.QLC))
+//			return Qlc.class;
+//		if (lid.equals(LotteryId.SSC))
+//			return Ssc.class;
+//		//
+//		if (lid.equals(LotteryId.DLT))
+//			return Dlt.class;
+//		if (lid.equals(LotteryId.PL3))
+//			return D3.class;
+//		if (lid.equals(LotteryId.PL5))
+//			return Pl5.class;
+//		if (lid.equals(LotteryId.QXC))
+//			return Qxc.class;
+//		if (lid.equals(LotteryId.SYXW))
+//			return Syxw.class;
+//		if (lid.equals(LotteryId.YTDJ))
+//			return Ytdj.class;
+//		if (lid.equals(LotteryId.CTZC))
+//			return ZCBaseActivity.class;
+		if (lid.equals(LotteryId.JCZQ))
+			return JCActivity.class;
+		if (lid.equals(LotteryId.JCLQ))
+			return JLActivity.class;
+//		if (lid.equals(LotteryId.BJDC))
+//			return JZBaseActivity.class;
+
+		return null;
+	}
+
 }

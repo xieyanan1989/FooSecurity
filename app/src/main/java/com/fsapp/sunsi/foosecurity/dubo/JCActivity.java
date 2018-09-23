@@ -18,6 +18,7 @@ import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchBean;
 import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchBeanListParser;
 import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchListBean;
 import com.fsapp.sunsi.foosecurity.dubo.bean.PlayBean;
+import com.fsapp.sunsi.foosecurity.dubo.util.LotteryId;
 import com.fsapp.sunsi.foosecurity.dubo.util.PlayInfo;
 import com.fsapp.sunsi.foosecurity.dubo.util.Tools;
 import com.fsapp.sunsi.foosecurity.dubo.view.AmazingListView;
@@ -180,10 +181,27 @@ public class JCActivity extends AppCompatActivity {
                                 Toast.makeText(JCActivity.this, "未选择单关赛事",Toast.LENGTH_SHORT).show();
                             }
                         }
+                        //当赛事大于串关的时候，串关选择规则
+                        matchsMorethenChuan(chuan);
                         countAndAount(lotterylid, mListPlayBeans.get(playIndex).getPlayId(), null, true);
                     }
             }
         });
+    }
+    //当赛事大于串关的时候，串关选择规则
+    private void matchsMorethenChuan(int chuan) {
+        //总进球数最多串六关
+        if(mListPlayBeans.get(playIndex).getPlayId().equals(LotteryId.PLAY_ID_03)){
+            if(chuan > 5){
+                chuanSelect.setUnCeck(chuan);
+            }
+        }
+        //半全场、比分、混合过关最多串四关
+        if(mListPlayBeans.get(playIndex).getPlayId().equals(LotteryId.PLAY_ID_04) || mListPlayBeans.get(playIndex).getPlayId().equals(LotteryId.PLAY_ID_05) || mListPlayBeans.get(playIndex).getPlayId().equals(LotteryId.PLAY_ID_06)){
+            if(chuan > 3){
+                chuanSelect.setUnCeck(chuan);
+            }
+        }
     }
 
     //赛事选择的回调监听

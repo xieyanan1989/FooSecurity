@@ -480,21 +480,43 @@ public class Arithmetic {
 	 * @return
 	 */
 	public static BigDecimal countPrizeCombinedArr(List arr,Map<String, List> map) {
-		BigDecimal count = new BigDecimal(0);
+		BigDecimal moeny = new BigDecimal(0);
 		for (int i = 0; i < arr.size(); i++) {
-			count = count.add(countPrize((List)arr.get(i),map));
+            BigDecimal singleMoeny = countPrize((List)arr.get(i),map);
+            //串关金额上限
+            singleMoeny = singleCountMoney(((List)arr.get(i)).size(),singleMoeny);
+            moeny = moeny.add(singleMoeny);
 		}
-		return count;
+		return moeny;
 	}
 
-	private static BigDecimal countPrize(List arr, Map<String, List> map) {
-		BigDecimal count = new BigDecimal("1");
+    private static BigDecimal singleCountMoney(int size, BigDecimal singleMoeny) {
+        //2 3 串 20万上限  4 5 串 50万上限 6串含以上100万上限
+        //由于没乘以金额2，所以这里判断的是上限/2
+        if(size==2 || size==3){
+            if(singleMoeny.compareTo(new BigDecimal(100000)) >= 0){
+                singleMoeny = new BigDecimal(100000);
+            }
+        }
+        if(size==4 || size==5){
+            if(singleMoeny.compareTo(new BigDecimal(250000)) >= 0){
+                singleMoeny = new BigDecimal(250000);
+            }
+        }
+        if(singleMoeny.compareTo(new BigDecimal(500000)) >= 0){
+            singleMoeny = new BigDecimal(500000);
+        }
+        return singleMoeny;
+    }
+
+    private static BigDecimal countPrize(List arr, Map<String, List> map) {
+		BigDecimal moeny = new BigDecimal("1");
 		for (int i = 0; i < arr.size(); i++) {
 			List jmax = map.get(arr.get(i));
 			BigDecimal max = new BigDecimal((String)jmax.get(jmax.size()-1));
-			count = count.multiply(max);
+            moeny = moeny.multiply(max);
 		}
-		return count;
+		return moeny;
 	}
 
 	/**

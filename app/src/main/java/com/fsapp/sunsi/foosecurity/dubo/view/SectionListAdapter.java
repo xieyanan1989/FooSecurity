@@ -11,10 +11,12 @@ import android.widget.TextView;
 import com.fsapp.sunsi.foosecurity.R;
 import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchBean;
 import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchListBean;
+import com.fsapp.sunsi.foosecurity.dubo.ticai.JLSFCLass;
 import com.fsapp.sunsi.foosecurity.dubo.ticai.JZBFCLass;
 import com.fsapp.sunsi.foosecurity.dubo.ticai.JZBQCCLass;
 import com.fsapp.sunsi.foosecurity.dubo.ticai.JZRQSPFCLass;
 import com.fsapp.sunsi.foosecurity.dubo.ticai.JZSPFCLass;
+import com.fsapp.sunsi.foosecurity.dubo.ticai.JZZHGGCLass;
 import com.fsapp.sunsi.foosecurity.dubo.ticai.JZZJQSCLass;
 import com.fsapp.sunsi.foosecurity.dubo.util.LotteryId;
 
@@ -264,7 +266,15 @@ public class SectionListAdapter extends AmazingAdapter {
             }
             if (playType.equals(LotteryId.PLAY_ID_06)) {
                 if (mJCItemClass == null) {
-                    mJCItemClass = new JZBFCLass(context, inflater,lotteryId);
+                    mJCItemClass = new JZZHGGCLass(context, inflater,lotteryId);
+                }
+                mJCItemClass.showItems(bean, parent_layout);
+            }
+        }
+        if (lotteryId.equals(LotteryId.JCLQ)) {
+            if (playType.equals(LotteryId.PLAY_ID_01)) {
+                if (mJCItemClass == null) {
+                    mJCItemClass = new JLSFCLass(context, inflater,lotteryId);
                 }
                 mJCItemClass.showItems(bean, parent_layout);
             }

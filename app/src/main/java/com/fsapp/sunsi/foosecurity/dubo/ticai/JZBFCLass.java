@@ -158,12 +158,18 @@ public class JZBFCLass extends JCAbstractClass {
 		}
 		if(win.length() > 0){
 			win_team.setText("胜\n"+win.substring(0,win.length()-1));
+		}else {
+			win_team.setText("胜");
 		}
 		if(flat.length() > 0){
 			flat_team.setText("平\n"+flat.substring(0,flat.length()-1));
+		}else {
+			flat_team.setText("平");
 		}
 		if(lose.length() > 0){
 			lose_team.setText("负\n"+lose.substring(0,lose.length()-1));
+		}else {
+			lose_team.setText("负");
 		}
 		SetReturnOnclick(LotteryId.JCZQ,LotteryId.PLAY_ID_05,bean);
 	}

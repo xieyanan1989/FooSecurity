@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="@dimen/all_zero"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+            <TextView
+                android:id="@+id/jc_matched_tx"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:ems="3"
+                android:gravity="center"
+                android:text="德乙\n周五003\n09-15 03:00"
+                android:textColor="@color/black"
+                android:textSize="@dimen/all_thirteen" />
+
+            <ImageView
+                android:id="@+id/item_single"
+                android:layout_width="@dimen/all_fifteen"
+                android:layout_height="@dimen/all_fifteen"
+                android:layout_alignParentTop="true"
+                android:background="@mipmap/single"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/all_zero"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/all_five">
+
+                <TextView
+                    android:id="@+id/item_home_tx"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/all_twenty"
+                    android:gravity="center"
+                    android:text="清水鼓动 VS 大阪钢巴"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/all_fifteen" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/item_splayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/all_three"
+                android:orientation="horizontal" >
+
+                <CheckBox
+                    android:id="@+id/item_guest_team"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/gray_to_red_checkbox_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="胜"
+                    android:textColor="@drawable/region_text_color"
+                    android:textSize="@dimen/all_fifteen" />
+
+                <CheckBox
+                    android:id="@+id/item_home_team"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/gray_to_red_checkbox_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="负"
+                    android:textColor="@drawable/region_text_color"
+                    android:textSize="@dimen/all_fifteen" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/all_five"
+        android:layout_margin="@dimen/all_ten"
+        android:background="@mipmap/horizontal_line" >
+    </LinearLayout>
+
+</LinearLayout>

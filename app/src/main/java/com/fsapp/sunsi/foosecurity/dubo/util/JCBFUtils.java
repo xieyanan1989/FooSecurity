@@ -148,6 +148,16 @@ public class JCBFUtils {
 		} 
 		return null;
 	}
+	public static String getJZSpfString(int position) {
+		if (position == 3) {
+			return "胜";
+		} else if (position == 1) {
+			return "平";
+		} else if (position == 0) {
+			return "负";
+		}
+		return null;
+	}
 	
 	public static String getBDString(int position){
 		if (position == 0) {

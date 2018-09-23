@@ -118,8 +118,14 @@
         <activity
             android:name=".dubo.JCZQActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".dubo.JCActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".dubo.JCActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".dubo.DuboMainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".dubo.JLActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
