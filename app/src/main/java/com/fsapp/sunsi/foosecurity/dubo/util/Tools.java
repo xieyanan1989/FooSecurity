@@ -467,6 +467,18 @@ public class Tools {
 						}
 				}
 				break;
+			case LotteryId.CTZC14:
+				switch (playType){
+					case LotteryId.PLAY_ID_01:
+						return bean.getZcList();
+				}
+				break;
+			case LotteryId.CTZC9:
+				switch (playType){
+					case LotteryId.PLAY_ID_01:
+						return bean.getZcList();
+				}
+				break;
 		}
 		return null;
 	}
@@ -489,4 +501,65 @@ public class Tools {
 		}
 		return value;
 	}
+//
+//	private int getCountCTZC(String lotteryId, List<JZMatchBean> selectMatchs) {
+//		int count = 0 ;
+//		if(lotteryId == LotteryId.CTZC14){
+//			if (selectMatchs.size() ==14){
+//				count = 1;
+//				for(JZMatchBean bean : selectMatchs){
+//					count = count*bean.getZcList().size();
+//				}
+//			}
+//		}
+//		if(lotteryId == LotteryId.CTZC9){
+//			if (selectMatchs.size() >=9){
+//				List danMappping = Arithmetic.convertFromPlanContentElementArray(0,0);
+//				List tuoMappping = Arithmetic.convertFromPlanContentElementArray(selectMatchs.size(),0);
+//				List combinedList = Arithmetic.fullCombinationDantuo(9,danMappping,tuoMappping);
+//				for (int ab = 0; ab < combinedList.size(); ab++) {
+//					count += sfr9PiecesCounter_base((List) combinedList.get(ab),all);
+//				}
+//			}
+//		}
+//		return count;
+//	}
+//	private int sfr9PiecesCounter_base(List arr,List all) {
+//		int single_count = 1;
+//		for (int j = 0, jmax = arr.size(); j < jmax; j++) {
+//			int index = (Integer) arr.get(j);
+//			single_count *= (Integer)all.get(index-1);
+//		}
+//		return single_count;
+//	}
+//
+//	private List allEachLength(String[] balls) {
+//		List tuoarr = new ArrayList();
+//		List danarr = new ArrayList();
+//		for(int i=0;i < balls.length; i++){
+//			if(balls[i].contains("_")){
+//				continue;
+//			}else{
+//				String[] a = balls[i].split("\\:");
+//				int d = 0;
+//				if(a.length == 1){
+//					String[] ab = a[0].split("\\,");
+//					for(int k =0;k<ab.length;k++){
+//						d +=1;
+//					}
+//					tuoarr.add(d);
+//				}else{
+//					String[] ab = a[1].split("\\,");
+//					for(int k =0;k<ab.length;k++){
+//						d +=1;
+//					}
+//					danarr.add(d);
+//				}
+//			}
+//
+//		}
+//		danarr.addAll(tuoarr);
+//		return danarr;
+//	}
+
 }

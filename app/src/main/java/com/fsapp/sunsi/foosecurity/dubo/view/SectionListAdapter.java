@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fsapp.sunsi.foosecurity.R;
+import com.fsapp.sunsi.foosecurity.dubo.CTZQActivity;
 import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchBean;
 import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchListBean;
 import com.fsapp.sunsi.foosecurity.dubo.ticai.JLSFCLass;
@@ -18,6 +19,8 @@ import com.fsapp.sunsi.foosecurity.dubo.ticai.JZRQSPFCLass;
 import com.fsapp.sunsi.foosecurity.dubo.ticai.JZSPFCLass;
 import com.fsapp.sunsi.foosecurity.dubo.ticai.JZZHGGCLass;
 import com.fsapp.sunsi.foosecurity.dubo.ticai.JZZJQSCLass;
+import com.fsapp.sunsi.foosecurity.dubo.ticai.ZC14CCLass;
+import com.fsapp.sunsi.foosecurity.dubo.ticai.ZC9CCLass;
 import com.fsapp.sunsi.foosecurity.dubo.util.LotteryId;
 
 import java.util.List;
@@ -279,6 +282,29 @@ public class SectionListAdapter extends AmazingAdapter {
                 mJCItemClass.showItems(bean, parent_layout);
             }
         }
+
+        if (lotteryId.equals(LotteryId.CTZC14)) {
+            if (mJCItemClass == null) {
+                mJCItemClass = new ZC14CCLass(context, inflater,lotteryId);
+            }
+            mJCItemClass.showItems(bean, parent_layout);
+        } else if (lotteryId.equals(LotteryId.CTZC9)) {
+            if (mJCItemClass == null) {
+                mJCItemClass = new ZC9CCLass(context, inflater,lotteryId);
+            }
+            mJCItemClass.showItems(bean, parent_layout);
+        }
+// else if (lotteryId.equals(LotteryId.CTZC6)) {
+//            if (mJCItemClass == null) {
+//                mJCItemClass = new ZC6CCLass(this, inflater, ZCBaseActivity.this,lotterylid);
+//            }
+//            mJCItemClass.showItems(bean, parent_layout);
+//        } else if (lotteryId.equals(LotteryId.CTZC4)) {
+//            if (mJCItemClass == null) {
+//                mJCItemClass = new ZC4CCLass(this, inflater, ZCBaseActivity.this,lotterylid);
+//            }
+//            mJCItemClass.showItems(bean, parent_layout);
+//        }
         mJCItemClass.setBetOnClickListener(new JCAbstractClass.OnBetOnClickListener() {
             @Override
             public void onOkBtnClick(String lotteryId, String playMethod, JZMatchBean jzMatchBean, boolean status) {

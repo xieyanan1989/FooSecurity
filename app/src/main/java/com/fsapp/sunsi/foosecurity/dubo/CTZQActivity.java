@@ -8,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fsapp.sunsi.foosecurity.R;
 import com.fsapp.sunsi.foosecurity.dialogs.BaseDialog;
@@ -21,11 +19,11 @@ import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchBean;
 import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchBeanListParser;
 import com.fsapp.sunsi.foosecurity.dubo.bean.JZMatchListBean;
 import com.fsapp.sunsi.foosecurity.dubo.bean.PlayBean;
+import com.fsapp.sunsi.foosecurity.dubo.util.Arithmetic;
 import com.fsapp.sunsi.foosecurity.dubo.util.LotteryId;
 import com.fsapp.sunsi.foosecurity.dubo.util.PlayInfo;
 import com.fsapp.sunsi.foosecurity.dubo.util.Tools;
 import com.fsapp.sunsi.foosecurity.dubo.view.AmazingListView;
-import com.fsapp.sunsi.foosecurity.dubo.view.ChuanSelectView;
 import com.fsapp.sunsi.foosecurity.dubo.view.JCSelectPlayTypeView;
 import com.fsapp.sunsi.foosecurity.dubo.view.PlaySelectView;
 import com.fsapp.sunsi.foosecurity.dubo.view.SectionListAdapter;
@@ -43,11 +41,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JCActivity extends AppCompatActivity {
+public class CTZQActivity extends AppCompatActivity {
     //获取所有玩法
     private ArrayList<PlayBean> mListPlayBeans = new ArrayList<PlayBean>();
     //彩种id
-    private String lotterylid = "209";
+    private String lotterylid = "205";
     //添加玩法标签
     JCSelectPlayTypeView jc_play_select;
     private PlaySelectView mPlaySelect;
@@ -55,78 +53,52 @@ public class JCActivity extends AppCompatActivity {
     private LinearLayout jc_play_type_title;
     private TextView jc_play_type;
     private  int playIndex = 0;
-    private int betnum = 1;
+
     private ProgressBar mProgressBar;
-    private TextView no_result_text;
-    //串关显示
-    private LinearLayout jc_chuan_show;
-    private JCSelectPlayTypeView jc_chuan_select_plays;
-    private String[] chuanCheck = new String[] { "单 关","2串1", "3串1", "4串1", "5串1", "6串1", "7串1", "8串1" };
-    ChuanSelectView chuanSelect;
-    private LinearLayout jc_choose_chuan;
-    private ImageView jc_choose_chuan_img;
     private JSONArray jsonArry;
     private Message msg;
     //底部清除所选数据按钮
     private LinearLayout jc_bet_delete;
     private TextView jc_bet_amount;
-    private TextView jc_bet_prize;
     private TextView jc_multiple_show;
     private Button jc_multiple_del;
     private Button jc_multiple_add;
+    private int betnum = 1;
     //注数
     private int count;
     //最高中奖金额
-    private  BigDecimal money = new BigDecimal(0);
+    private BigDecimal money;
     private SectionListAdapter sectionAdapter;
     private AmazingListView sectionLV;
     private LayoutInflater inflater;
+    private TextView no_result_text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jc);
+        setContentView(R.layout.activity_ctzq);
         inflater = LayoutInflater.from(this);
-        mListPlayBeans = PlayInfo.getPlay(lotterylid);
+        mListPlayBeans = PlayInfo.getPlay("205678");
         jc_play_select =  (JCSelectPlayTypeView) findViewById(R.id.jc_play_select);
         jc_play_type_show =  (LinearLayout) findViewById(R.id.jc_play_type_show);
         jc_play_type_title =  (LinearLayout) findViewById(R.id.jc_play_type_title);
         mProgressBar = (ProgressBar) findViewById(R.id.loadding_progressbar_m);
         no_result_text = (TextView) findViewById(R.id.no_result_text);
-        //串关显示
-        jc_chuan_show =  (LinearLayout) findViewById(R.id.jc_chuan_show);
-        jc_chuan_select_plays =  (JCSelectPlayTypeView) findViewById(R.id.jc_chuan_select_plays);
         jc_play_type =  (TextView) findViewById(R.id.jc_play_type);
-        jc_choose_chuan =  (LinearLayout) findViewById(R.id.jc_choose_chuan);
-        jc_choose_chuan_img =  (ImageView) findViewById(R.id.jc_choose_chuan_img);
         sectionLV = (AmazingListView) findViewById(R.id.jc_section_list_view);
+        //玩法显示
+        mPlaySelect = new PlaySelectView(CTZQActivity.this, jc_play_select, mListPlayBeans,playIndex);
         jc_multiple_show =  (TextView) findViewById(R.id.jc_multiple_show);
         jc_multiple_del =  (Button) findViewById(R.id.jc_multiple_del);
         jc_multiple_add =  (Button) findViewById(R.id.jc_multiple_add);
-        //玩法显示
-        mPlaySelect = new PlaySelectView(JCActivity.this, jc_play_select, mListPlayBeans,playIndex);
         //清除所选数据按钮
         jc_bet_delete =  (LinearLayout) findViewById(R.id.jc_bet_delete);
         jc_bet_amount =  (TextView) findViewById(R.id.jc_bet_amount);
-        jc_bet_prize =  (TextView) findViewById(R.id.jc_bet_prize);
-        jc_choose_chuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(jc_chuan_select_plays.getVisibility() == View.VISIBLE){
-                    jc_chuan_select_plays.setVisibility(View.GONE);
-                    jc_choose_chuan_img.setBackground(getResources().getDrawable(R.mipmap.red_expand_up));
-                }else{
-                    jc_chuan_select_plays.setVisibility(View.VISIBLE);
-                    jc_choose_chuan_img.setBackground(getResources().getDrawable(R.mipmap.red_expand_down));
-                }
-            }
-        });
         jc_bet_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clearAllList();
             }
         });
-        chuanSelect = new ChuanSelectView(JCActivity.this,jc_chuan_select_plays, chuanCheck);
         View sectionHeaderView = inflater.inflate(R.layout.jingcai_section_header, sectionLV, false);
         sectionLV.setPinnedHeaderView(sectionHeaderView);
         sectionAdapter = new SectionListAdapter(jzMatchBeans,jzMatchListBeans,inflater);
@@ -137,8 +109,6 @@ public class JCActivity extends AppCompatActivity {
         playSelect();
         //赛事选择的回调监听
         jcItemsBack();
-        //串关回调函数监听
-        chuanItemSelect();
         //倍数选择按钮
         checkMultiple();
         //倍数减少点击事件
@@ -147,7 +117,6 @@ public class JCActivity extends AppCompatActivity {
         multipleAdd();
         TradeNoTask();
     }
-
     private void multipleAdd() {
         jc_multiple_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +128,6 @@ public class JCActivity extends AppCompatActivity {
                 }
                 jc_multiple_show.setText(betnum+"");
                 jc_bet_amount.setText(count+"注"+betnum+"倍"+count*2* betnum+"元");
-                jc_bet_prize.setText("理论最高奖金"+money.multiply(new BigDecimal(betnum))+"元");
             }
         });
     }
@@ -175,7 +143,6 @@ public class JCActivity extends AppCompatActivity {
                 }
                 jc_multiple_show.setText(betnum+"");
                 jc_bet_amount.setText(count+"注"+betnum+"倍"+count*2* betnum+"元");
-                jc_bet_prize.setText("理论最高奖金"+money.multiply(new BigDecimal(betnum))+"元");
             }
         });
     }
@@ -185,7 +152,7 @@ public class JCActivity extends AppCompatActivity {
         jc_multiple_show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditDialog dialog = new EditDialog(JCActivity.this);
+                final EditDialog dialog = new EditDialog(CTZQActivity.this);
                 dialog.setButtonOnClickListener(new BaseDialog.OnButtonOnClickListener() {
                     @Override
                     public void onOkBtnClick() {
@@ -193,7 +160,6 @@ public class JCActivity extends AppCompatActivity {
                             jc_multiple_show.setText(dialog.getString());
                             betnum = Tools.getStringOfInteger(dialog.getString());
                             jc_bet_amount.setText(count+"注"+betnum+"倍"+count*2* betnum+"元");
-                            jc_bet_prize.setText("理论最高奖金"+money.multiply(new BigDecimal(betnum))+"元");
                         }
                     }
 
@@ -207,6 +173,7 @@ public class JCActivity extends AppCompatActivity {
             }
         });
     }
+
 
     //玩法标题选择
     private void palaySelectTitle() {
@@ -230,56 +197,21 @@ public class JCActivity extends AppCompatActivity {
                 playIndex = v.getId();
                 jc_play_type.setText(mListPlayBeans.get(playIndex).getPlayName());
                 jc_play_type_show.setVisibility(View.GONE);
+                if(playIndex == 0){
+                    lotterylid = "205";
+                }
+                if(playIndex == 1){
+                    lotterylid = "206";
+                }
+                if(playIndex == 2){
+                    lotterylid = "207";
+                }
+                if(playIndex == 3){
+                    lotterylid = "208";
+                }
                 TradeNoTask();
             }
         });
-    }
-
-    //串关回调函数监听
-    private void chuanItemSelect() {
-        chuanSelect.setOnClickPlaySelect(new ChuanSelectView.OnClickPlaySelect() {
-            @Override
-            public void onClick(View v) {
-                int chuan = v.getId();
-                    if ((chuan+1) > selectMatchs.size()){
-                        CheckBox check = (CheckBox) v;
-                        check.setChecked(false);
-                    }else{
-                        //是否单关，有单关，按钮显示，无单关提示不存在
-                        if(chuan == 0){
-                            boolean single = false;
-                            for(JZMatchBean bean : selectMatchs){
-                                if (bean.getSingle().equals("1")){
-                                    single = true;
-                                    break;
-                                }
-                            }
-                            if (!single){
-                                chuanSelect.getListViews().get(0).setChecked(false);
-                                Toast.makeText(JCActivity.this, "未选择单关赛事",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        //当赛事大于串关的时候，串关选择规则
-                        matchsMorethenChuan(chuan);
-                        countAndAount(lotterylid, mListPlayBeans.get(playIndex).getPlayId(), null, true);
-                    }
-            }
-        });
-    }
-    //当赛事大于串关的时候，串关选择规则
-    private void matchsMorethenChuan(int chuan) {
-        //总进球数最多串六关
-        if(mListPlayBeans.get(playIndex).getPlayId().equals(LotteryId.PLAY_ID_03)){
-            if(chuan > 5){
-                chuanSelect.setUnCeck(chuan);
-            }
-        }
-        //半全场、比分、混合过关最多串四关
-        if(mListPlayBeans.get(playIndex).getPlayId().equals(LotteryId.PLAY_ID_04) || mListPlayBeans.get(playIndex).getPlayId().equals(LotteryId.PLAY_ID_05) || mListPlayBeans.get(playIndex).getPlayId().equals(LotteryId.PLAY_ID_06)){
-            if(chuan > 3){
-                chuanSelect.setUnCeck(chuan);
-            }
-        }
     }
 
     //赛事选择的回调监听
@@ -305,24 +237,16 @@ public class JCActivity extends AppCompatActivity {
         if (jzMatchBean != null){
             addOrReplaceMatchs(jzMatchBean,status);
         }
-        //串关是否存在
-        List<Integer> list = chuanSelect.getSelectChuan();
-        //当选中的赛事小于串关的时候，串关隐藏掉
-        List<CheckBox> listView = chuanSelect.getListViews();
-        for(int i = selectMatchs.size() ;i <list.size(); i ++){
-            listView.get(i).setChecked(false);
-            list.remove(i+1);
+        List<Integer> list = new ArrayList<Integer>();
+        if (lotteryId == LotteryId.CTZC14){
+            list.add(14);
+        }else if(lotteryId == LotteryId.CTZC9){
+            list.add(9);
         }
-        if(list.size() <= 0){
-            count =0;
-            money =new BigDecimal(0);
-        }else {
-            Collections.sort(list);
+        if(selectMatchs.size() >= list.get(0)){
             count = Tools.getCount(list,selectMatchs,lotteryId,playMethod);
-            money = Tools.getPrize(list,selectMatchs,lotteryId,playMethod);
         }
         jc_bet_amount.setText(count+"注"+betnum+"倍"+count*2* betnum+"元");
-        jc_bet_prize.setText("理论最高奖金"+money.multiply(new BigDecimal(betnum))+"元");
     }
 
 
@@ -344,7 +268,6 @@ public class JCActivity extends AppCompatActivity {
         if(!status){
             selectMatchs.remove(jzMatchBean);
         }
-        chuanSelect.setUnCeck(selectMatchs.size());
     }
 
     private void TradeNoTask() {
@@ -356,7 +279,7 @@ public class JCActivity extends AppCompatActivity {
                 try {
                     Map map = new HashMap();
                     map.put("lotteryId",lotterylid);
-                    map.put("playType",mListPlayBeans.get(playIndex).getPlayId());
+                    map.put("playType",mListPlayBeans.get(playIndex).getPollId());
                     String json = UTIL.AjaxJson(map);
                     String sig = HttpRequest.md5(json);
                     Map<String,String> paramMap = new HashMap<String, String>();
@@ -398,7 +321,7 @@ public class JCActivity extends AppCompatActivity {
                     //保持按天先后顺序，否则显示的时候会乱
                     List<String> weekKeys = new ArrayList<String>();
                     for (JZMatchBean bean :jzMatchBeans){
-                        bean.setWeekName(StringUtil.getWeekName(bean.getWeek()));
+                        bean.setWeek("比賽名稱");
                         JZMatchListBean listBean = jzMatchListMap.get(bean.getWeek());
                         if (listBean == null){
                             weekKeys.add(bean.getWeek());
@@ -410,16 +333,14 @@ public class JCActivity extends AppCompatActivity {
                     }
                     for ( String key : weekKeys){
                         JZMatchListBean listBean = jzMatchListMap.get(key);
-                        String no = listBean.getMatchList().get(0).getMatchno();
-                        listBean.setSection("20"+no.substring(0, 2)+"-"+no.substring(2, 4)+"-"+no.substring(4, 6)+"("+listBean.getMatchList().get(0).getWeekName()+")"+" 有"+listBean.getMatchList().size()+"场比赛");
-//                        listBean.setSection("20"+no.substring(0, 2)+"-"+no.substring(2, 4)+"-"+no.substring(4, 6));
+                        listBean.setSection(listBean.getMatchList().get(0).getMatched()+" "+listBean.getMatchList().get(0).getEndtime());
                         jzMatchListBeans.add(jzMatchListMap.get(key));
                     }
                     sectionAdapter.setJzMatchBeans(jzMatchBeans);
                     sectionAdapter.setJzMatchListBeans(jzMatchListBeans);
                     sectionAdapter.setLotteryId(lotterylid);
-                    sectionAdapter.setPlayType(mListPlayBeans.get(playIndex).getPlayId());
-                    sectionAdapter.setContext(JCActivity.this);
+                    sectionAdapter.setPlayType(mListPlayBeans.get(playIndex).getPollId());
+                    sectionAdapter.setContext(CTZQActivity.this);
                     sectionAdapter.notifyDataSetChanged();
                     break;
                 case 2:
@@ -438,12 +359,10 @@ public class JCActivity extends AppCompatActivity {
         jzMatchListBeans.clear();
         //选择的赛事清除掉
         selectMatchs.clear();
-        //清除所有串关方式
-        chuanSelect.setUnCeck(0);
+        count = 0;
         betnum =1;
         jc_multiple_show.setText("1");
         jc_bet_amount.setText("投注注数0注，金额0元");
-        jc_bet_prize.setText("理论最高奖金0元");
     }
 
     /**
@@ -451,36 +370,21 @@ public class JCActivity extends AppCompatActivity {
      */
     private void clearAllList() {
         for (int i = 0; i < jzMatchBeans.size(); i++) {
-            jzMatchBeans.get(i).getJzspfList().clear();
-            jzMatchBeans.get(i).getJzrqspfLiset().clear();
-            jzMatchBeans.get(i).getJzzjqsList().clear();
-            jzMatchBeans.get(i).getJzbqcList().clear();
-            jzMatchBeans.get(i).getJzbfList().clear();
-            jzMatchBeans.get(i).getJzspfPvList().clear();
-            jzMatchBeans.get(i).getJzrqspfPvLiset().clear();
-            jzMatchBeans.get(i).getJzzjqsPvList().clear();
-            jzMatchBeans.get(i).getJzbqcPvList().clear();
-            jzMatchBeans.get(i).getJzbfPvList().clear();
-            jzMatchBeans.get(i).getJlsfList().clear();
-            jzMatchBeans.get(i).getJlrfsfList().clear();
-            jzMatchBeans.get(i).getJldxfList().clear();
-            jzMatchBeans.get(i).getJlsfcList().clear();
-            jzMatchBeans.get(i).getJlsfPvList().clear();
-            jzMatchBeans.get(i).getJlrfsfPvList().clear();
-            jzMatchBeans.get(i).getJldxfPvList().clear();
-            jzMatchBeans.get(i).getJlsfcPvList().clear();
-            jzMatchBeans.get(i).getBdsxdsList().clear();
-            jzMatchBeans.get(i).getBdsxdsPvList().clear();
+            jzMatchBeans.get(i).zcList.clear();
+            jzMatchBeans.get(i).zcPvList.clear();
+            jzMatchBeans.get(i).zcbcList.clear();
+            jzMatchBeans.get(i).zcbcPvList.clear();
+            jzMatchBeans.get(i).zcqcList.clear();
+            jzMatchBeans.get(i).zcqcPvList.clear();
+            jzMatchBeans.get(i).setHasDan(false);
+            jzMatchBeans.get(i).setCount(0);
         }
         //选择的赛事清除掉
         selectMatchs.clear();
-        //清除所有串关方式
-        chuanSelect.setUnCeck(0);
+        count = 0;
+        betnum =1;
         jc_multiple_show.setText("1");
         jc_bet_amount.setText("投注注数0注，金额0元");
-        jc_bet_prize.setText("理论最高奖金0元");
-        betnum =1;
         sectionAdapter.notifyDataSetChanged();
-//        TradeNoTask();
     }
 }

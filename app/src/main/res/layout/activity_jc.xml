@@ -58,6 +58,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:visibility="gone" />
+                <TextView
+                    android:id="@+id/no_result_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="暂无赛事!"
+                    android:textSize="@dimen/all_twenty_eight"
+                    android:visibility="gone" />
             </FrameLayout>
         </LinearLayout>
         <LinearLayout
@@ -137,7 +146,8 @@
                         android:gravity="center"
                         android:textColor="@color/red"
                         android:textSize="@dimen/all_thirteen"
-                        android:text="1"/>
+                        android:text="1"
+                        android:button="@null"/>
                     <Button
                         android:id="@+id/jc_multiple_add"
                         android:layout_width="@dimen/all_zero"

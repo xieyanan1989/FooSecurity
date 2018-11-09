@@ -1,5 +1,6 @@
 package com.fsapp.sunsi.foosecurity.dubo.util;
 import com.fsapp.sunsi.foosecurity.R;
+import com.fsapp.sunsi.foosecurity.dubo.CTZQActivity;
 import com.fsapp.sunsi.foosecurity.dubo.JCActivity;
 import com.fsapp.sunsi.foosecurity.dubo.JLActivity;
 import com.fsapp.sunsi.foosecurity.dubo.SsqActivity;
@@ -675,8 +676,8 @@ public class LotteryId {
 //			return Syxw.class;
 //		if (lid.equals(LotteryId.YTDJ))
 //			return Ytdj.class;
-//		if (lid.equals(LotteryId.CTZC))
-//			return ZCBaseActivity.class;
+		if (lid.equals(LotteryId.CTZC))
+			return CTZQActivity.class;
 		if (lid.equals(LotteryId.JCZQ))
 			return JCActivity.class;
 		if (lid.equals(LotteryId.JCLQ))

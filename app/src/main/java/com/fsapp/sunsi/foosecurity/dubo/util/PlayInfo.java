@@ -86,6 +86,34 @@ public class PlayInfo {
 			mBean5.setPollId("01");
 			mBean5.setIcon(R.mipmap.play_jclq_05);
 			mListPlayBeans.add(mBean5);
+		}else if(lid.equals(LotteryId.CTZC)){
+			PlayBean mBean1 = new PlayBean();
+			mBean1.setPlayName("胜负彩十四场");
+			mBean1.setPlayId("205");
+			mBean1.setPollId("01");
+			mBean1.setIcon(R.mipmap.play_ctzc_01);
+			mListPlayBeans.add(mBean1);
+
+			PlayBean mBean2 = new PlayBean();
+			mBean2.setPlayName("胜负彩任九场");
+			mBean2.setPlayId("206");
+			mBean2.setPollId("01");
+			mBean2.setIcon(R.mipmap.play_ctzc_02);
+			mListPlayBeans.add(mBean2);
+
+//			PlayBean mBean3 = new PlayBean();
+//			mBean3.setPlayName("6场半全场");
+//			mBean3.setPlayId("207");
+//			mBean3.setPollId("01");
+//			mBean3.setIcon(R.mipmap.play_ctzc_03);
+//			mListPlayBeans.add(mBean3);
+//
+//			PlayBean mBean4 = new PlayBean();
+//			mBean4.setPlayName("4场进球彩");
+//			mBean4.setPlayId("208");
+//			mBean4.setPollId("01");
+//			mBean4.setIcon(R.mipmap.play_ctzc_04);
+//			mListPlayBeans.add(mBean4);
 		}
 		
 		return mListPlayBeans;

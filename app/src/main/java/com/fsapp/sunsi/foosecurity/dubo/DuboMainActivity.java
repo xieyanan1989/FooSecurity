@@ -21,7 +21,7 @@ public class DuboMainActivity extends AppCompatActivity {
     public static final String KEY_BUNDLE_LID = "KEY_BUNDLE_LID";
     public static final String KEY_BUNDLE_PLAY_ID = "KEY_BUNDLE_PLAY_ID";
     public static final String KEY_BUNDLE_POLL_ID = "KEY_BUNDLE_POLL_ID";
-    private final String[] arrayLids = {LotteryId.SSQ, LotteryId.JCZQ, LotteryId.JCLQ};
+    private final String[] arrayLids = {LotteryId.SSQ, LotteryId.JCZQ, LotteryId.JCLQ, LotteryId.CTZC};
     private ArrayList<View> list;
     private TextView tvBalance;
     private LinearLayout contentlayout;

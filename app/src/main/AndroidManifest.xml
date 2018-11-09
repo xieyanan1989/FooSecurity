@@ -124,8 +124,11 @@
         <activity
             android:name=".dubo.DuboMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".dubo.JLActivity"
+        <activity
+            android:name=".dubo.JLActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".dubo.CTZQActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

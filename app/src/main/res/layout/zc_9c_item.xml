@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/all_ten">
+        <LinearLayout
+            android:id="@+id/item_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/league_cc"
+                android:layout_width="@dimen/all_forty"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dip"
+                android:layout_marginLeft="-5dp"
+                android:ems="4"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="场次"
+                android:textSize="@dimen/all_fifteen" />
+
+            <TextView
+                android:id="@+id/league_img"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ems="3"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="NBA联赛"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/all_fifteen" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/item_splayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/item_win_team"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/gray_to_red_checkbox_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="胜 "
+                android:textColor="@drawable/region_text_color"
+                android:textSize="@dimen/all_fifteen" />
+
+            <CheckBox
+                android:id="@+id/item_flat_team"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/gray_to_red_checkbox_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="平"
+                android:textColor="@drawable/region_text_color"
+                android:textSize="@dimen/all_fifteen" />
+
+            <CheckBox
+                android:id="@+id/item_lose_team"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/gray_to_red_checkbox_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="负"
+                android:textColor="@drawable/region_text_color"
+                android:textSize="@dimen/all_fifteen" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/all_five"
+        android:layout_margin="@dimen/all_three"
+        android:background="@mipmap/horizontal_line" >
+    </LinearLayout>
+
+</LinearLayout>

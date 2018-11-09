@@ -22,8 +22,8 @@
                 android:paddingLeft="@dimen/all_ten"/>
             <CheckBox
                 android:id="@+id/section_expend_cb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/all_forty"
+                android:layout_height="@dimen/all_forty"
                 android:background="@drawable/jingcai_down_or_up_selector"
                 android:button="@null"
                 android:gravity="center" />

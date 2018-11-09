@@ -15,7 +15,7 @@
             android:id="@+id/jc_play_type"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="胜负"
+            android:text="胜负彩十四场"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="@dimen/all_twenty"
@@ -94,20 +94,21 @@
                 android:background="@color/red">
             </LinearLayout>
         </LinearLayout>
+
         <!--串关显示-->
         <LinearLayout
             android:id="@+id/jc_chuan_show"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_above="@+id/jc_bottom_show">
+            android:layout_above="@+id/jc_bottom_show"
+            android:background="@color/white">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/all_forty"
                 android:orientation="horizontal"
                 android:padding="@dimen/all_three">
                 <LinearLayout
-                    android:id="@+id/jc_choose_chuan"
                     android:layout_width="@dimen/all_zero"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5">
@@ -117,13 +118,8 @@
                         android:text="过关方式"
                         android:textSize="@dimen/all_fifteen"
                         android:layout_gravity="center"
-                        android:paddingLeft="@dimen/all_fifteen"/>
-                    <ImageView
-                        android:id="@+id/jc_choose_chuan_img"
-                        android:layout_width="@dimen/all_thirty"
-                        android:layout_height="@dimen/all_thirty"
-                        android:background="@mipmap/red_expand_up"
-                        android:layout_gravity="bottom"/>
+                        android:paddingLeft="@dimen/all_fifteen"
+                        android:visibility="gone"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="@dimen/all_zero"
@@ -146,7 +142,8 @@
                         android:gravity="center"
                         android:textColor="@color/red"
                         android:textSize="@dimen/all_thirteen"
-                        android:text="1"/>
+                        android:text="1"
+                        android:button="@null"/>
                     <Button
                         android:id="@+id/jc_multiple_add"
                         android:layout_width="@dimen/all_zero"
@@ -159,17 +156,6 @@
                         android:layout_marginRight="@dimen/all_ten"/>
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/all_one"
-                android:background="@mipmap/horizontal_line">
-            </LinearLayout>
-            <com.fsapp.sunsi.foosecurity.dubo.view.JCSelectPlayTypeView
-                android:id="@+id/jc_chuan_select_plays"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-            </com.fsapp.sunsi.foosecurity.dubo.view.JCSelectPlayTypeView>
         </LinearLayout>
 
         <!--底部金额显示-->
@@ -206,14 +192,6 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     />
-                <TextView
-                    android:id="@+id/jc_bet_prize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="理论最高奖金0元"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    />
             </LinearLayout>
 
 
@@ -236,5 +214,8 @@
 
         </LinearLayout>
     </RelativeLayout>
+
+
+
 
 </LinearLayout>
